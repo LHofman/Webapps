@@ -1,0 +1,100 @@
+body{
+  background-color: lightgrey;
+}
+
+#navigation {
+    margin-top: 50px;
+    margin-left: -10px;
+    margin-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: #0DF;
+    width: 105%;
+    height: 50px;
+    border: 2px solid blue;
+}
+#navigation ul {
+    margin: 0 auto;
+    height: 60px;
+    width: 80%;
+    text-align: center;
+}
+#navigation li {
+    margin-top: 10px;
+    margin-right: 10px;
+    list-style: none;
+    width: 20%;
+    max-width: 200px;
+    display: inline-block;
+    font-size: 25px;
+    font-family: arial;
+}
+#navigation ul li a {
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    color: black;
+}
+#navigation ul li a.currentPage {
+  color: Grey;
+  text-decoration: underline;
+}
+#navigation ul li a:hover{
+  color: Grey
+}
+
+#albums ul li{
+  list-style: none;
+}
+#albums ul li img {
+    width: 200px;
+    height: 200px;
+}
+
+#content{
+  font-size: 16px;
+  color: black;
+  margin-top: 50px;
+  margin-right: 20px;
+}
+
+/*floats*/
+.left20{
+  float:left;
+  width: 20%;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.left40{
+  float:left;
+  width: 40%;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.right50{
+  float: right;
+  width: 50%;
+
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.right80{
+  float: right;
+  width: 80%;
+
+  margin-left: 10px;
+  margin-right: 10px;
+}
+/*margins*/
+.mbottom50{
+  margin-bottom: 50px;
+}
+/*dimensions*/
+.mw500{
+  max-width: 500px;
+}
+
+#photoMe{
+  width: 100%;
+  display: block;
+}
