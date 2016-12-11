@@ -8,4 +8,9 @@ var AlbumSchema = new mongoose.Schema({
   comments: [{type: mongoose.Schema.Types.ObjectId, ref:'Comment'}]
 });
 
+AlbumSchema.methods.upvote = function(cb){
+  this.upvotes++;
+  this.save(cb);
+};
+
 mongoose.model('Album', AlbumSchema);

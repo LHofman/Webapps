@@ -3,73 +3,155 @@ var app = angular.module('app', ['ui.router']);
 app.config(function($stateProvider, $urlRouterProvider){
     $stateProvider.state('home', {
       url: '/home',
-      templateUrl: '/home.html',
-      controller: 'AlbumsCtrl'
+      templateUrl: '/home.html'
     }).state('albums', {
-      url: '/albums/{id}',
+      url: '/albums',
       templateUrl: '/albums.html',
-      controller: 'PhotosCtrl'
+      controller: 'AlbumsCtrl',
+      resolve: {
+        albumPromise: function(albums){
+          return albums.getAll();
+        }
+      }
+    }).state('photos', {
+      url: '/photos/{id}',
+      templateUrl: '/photos.html',
+      controller: 'PhotosCtrl',
+      resolve: {
+        album: function($stateParams, albums){
+          return albums.get($stateParams.id);
+        }
+      }
     }).state('picture', {
       url: '/picture/{albumId}/{id}',
       templateUrl: '/picture.html',
       controller: 'PictureCtrl'
+    }).state('links', {
+      url: '/links',
+      templateUrl: '/links.html',
+    }).state('contact', {
+      url: '/contact',
+      templateUrl: '/contact.html',
+      controller: 'contactCtrl'
+    }).state('login', {
+      url: '/login',
+      templateUrl: '/login.html',
+      controller: 'AuthCtrl',
+      onEnter: function($state, auth){
+        if(auth.isLoggedIn()){
+          $state.go('home');
+        }
+      }
+    }).state('register', {
+      url: '/register',
+      templateUrl: '/register.html',
+      controller: 'AuthCtrl',
+      onEnter: function($state, auth){
+        if(auth.isLoggedIn()){
+          $state.go('home');
+        }
+      }
     });
     $urlRouterProvider.otherwise('home');
   }
 );
-app.factory('albums', [function(){
+app.factory('albums', function($http, auth){
   var o = {
     albums: []
   };
 
   o.create = function(album){
-    o.albums.push(album);
+    return $http.post('/albums', album, {
+      headers: {Authorization: 'Bearer '+auth.getToken()}
+    }).success(function(data){
+      o.albums.push(data);
+    });
+  }
+  o.getAll = function(){
+    return $http.get('/albums').success(function(data){
+      angular.copy(data, o.albums);
+    });
+  }
+  o.get = function(id){
+    return $http.get('/albums/' + id).then(function(res){
+      return res.data;
+    });
+  }
+  o.upvote = function(album){
+    return $http.put('/albums/' + album._id + '/upvote', null, {
+      headers: {Authorization: 'Bearer '+auth.getToken()}
+    }).success(function(data){
+      album.upvotes++;
+    });
+  }
+
+  o.addComment = function(id, comment){
+    return $http.post('/albums/'+id+'/comments', comment, {
+      headers: {Authorization: 'Bearer '+auth.getToken()}
+    });
+  }
+  o.upvoteComment = function(album, comment){
+    return $http.put('/albums/' + album._id + '/comments/' + comment._id + '/upvote', null, {
+      headers: {Authorization: 'Bearer '+auth.getToken()}
+    }).success(function(data){
+      comment.upvotes++;
+    });
   }
 
   return o;
-}]);
+});
+app.factory('auth', function($http, $window){
+  var auth = {};
 
-app.directive("menuList", function(){
-  return function(scope, element, attrs){
-    //get data from list "menu items"
-    var data = scope[attrs["menuList"]];
-    if(!angular.isArray(data)){
-      console.log("something went wrong. No data here.")
-      return;
-    }
-    var arrayItem = attrs["arrayItem"];
-    //create div for menu
-    var menu = angular.element("<div id='navigation'>");
-    element.append(menu);
-    //create ul for list "menu"
-    var listElem = angular.element("<ul>");
-    menu.append(listElem);
-    //add menu items to list
-    for (var i=0; i<data.length; i++){
-      var name = data[i].name;
-      //var link = scope.homeDir + data[i].link;
-      var link = data[i].link;
-      //create li for menu item
-      var item = angular.element("<li id='"+name+"'>");
-      //add link to menu item
-      var a = "<a href='"+link+"'>";
-      if (scope.currentPage == data[i].link){a = "<a class='currentPage' href='"+link+"'>";}
-      item.append(angular.element(a).text(name));
-      listElem.append(item);
+  auth.saveToken = function(token){
+    $window.localStorage['vandaelefotografie-token'] = token;
+  }
+
+  auth.getToken = function(){
+    return $window.localStorage['vandaelefotografie-token'];
+  }
+
+  auth.isLoggedIn = function(){
+    var token = auth.getToken();
+
+    if(token){
+      var payload = JSON.parse($window.atob(token.split('.')[1]));
+      return payload.exp > Date.now() / 1000;
+    }else{
+      return false;
     }
   }
-});
-app.controller('MenuCtrl', function($scope, $location){
-  //menu items declareren
-  $scope.menuItems = [
-    {name: "Home", link: "/index.html"},
-    {name: "Albums", link: "/albums.html"},
-    {name: "Links", link: "/links.html"},
-    {name: "Contact", link: "/contact.html"}
-  ];
-});
 
-app.controller('AlbumsCtrl', function($scope, albums){
+  auth.currentUser = function(){
+    if(auth.isLoggedIn()){
+      var token = auth.getToken();
+      var payload = JSON.parse($window.atob(token.split('.')[1]));
+
+      return payload.username;
+    }
+  }
+
+  auth.register = function(user){
+    return $http.post('/register', user).success(function(data){
+      auth.saveToken(data.token);
+    });
+  }
+
+  auth.logIn = function(user){
+    return $ttp.post('/login', user).success(function(data){
+      auth.saveToken(data.token);
+    });
+  }
+
+  auth.logOut = function(){
+    $window.localhost.removeItem('vandaelefotografie-token');
+  }
+
+  return auth;
+})
+
+app.controller('AlbumsCtrl', function($scope, albums, auth){
+  $scope.isLoggedIn = auth.isLoggedIn;
   $scope.albums = albums.albums;
   //albums declareren
   if (albums.albums.length == 0){
@@ -339,20 +421,28 @@ app.controller('AlbumsCtrl', function($scope, albums){
     });
   }
 
+  $scope.addAlbum = function(){
+      if(!$scope.name || $scope.title === ''){return;}
+      albums.create({
+        name: $scope.title,
+      });
+      $scope.title = '';
+  }
 
   $scope.incrementUpvotes = function(album){
-    album.upvotes++;
+    albums.upvote(album);
   }
 });
-app.controller('PhotosCtrl', function($scope, $stateParams, albums){
-  $scope.album = albums.albums[$stateParams.id];
-  $scope.albumId = $stateParams.id;
+app.controller('PhotosCtrl', function($scope, albums, album, auth){
+  $scope.isLoggedIn = auth.isLoggedIn;
+  $scope.album = album;
   $scope.addComment = function(){
     if ($scope.body === ''){return;}
-    $scope.album.comments.push({
-      author: 'me',
+    albums.addComment(album._id, {
       body: $scope.body,
-      upvotes: 0
+      author: 'user'
+    }).success(function(comment){
+      $scope.album.comments.push(comment);
     });
     $scope.body = '';
   }
@@ -360,7 +450,7 @@ app.controller('PhotosCtrl', function($scope, $stateParams, albums){
     photo.upvotes++;
   }
   $scope.incrementUpvotesComment = function(comment){
-    comment.upvotes++;
+    albums.upvoteComment(album, comment);
   }
 });
 app.controller('PictureCtrl', function($scope, $stateParams, albums){
@@ -379,8 +469,28 @@ app.controller('PictureCtrl', function($scope, $stateParams, albums){
     comment.upvotes++;
   }
 });
-
-
-app.controller('MailCtrl', function($scope){
+app.controller('ContactCtrl', function($scope){
    //
+});
+app.controller('AuthCtrl', function($scope, $state, auth){
+  $scope.user = {};
+  $scope.register = function(){
+    auth.register($scope.user).error(function(error){
+      $scope.error = error;
+    }).then(function(){
+      $state.go('home');
+    });
+  }
+  $scope.logIn = function(){
+    auth.logIn($scope.user).error(function(error){
+      $scope.error = error;
+    }).then(function(){
+      $state.go('home');
+    });
+  }
+})
+app.controller('NavCtrl', function($scope, auth){
+  $scope.isLoggedIn = auth.isLoggedIn;
+  $scope.currentUser = auth.currentUser;
+  $scope.logOut = auth.logOut;
 });
