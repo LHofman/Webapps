@@ -1,0 +1,83 @@
+<!doctype html>
+<html ng-app="app" ng-cloak>
+
+<head>
+    <title>Van Daele Fotografie</title>
+    <link rel=stylesheet href=../css/stylesheet.css>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+    <script src="/javascripts/angularApp.js"></script>
+</head>
+
+<body>
+    <div ng-controller="MenuCtrl">
+      <div menu-list="menuItems">
+
+      </div>
+    </div>
+    <div id="albums">
+      <ui-view></ui-view>
+    </div>
+    <script type="text/ng-template" id="/home.html">
+      <ul>
+        <li class="left20" ng-repeat="album in albums | orderBy: '-upvotes'">
+          <span ng-click="incrementUpvotes(album)"><img src="../resources/photos/thumbsUp.png"/>
+            {{album.upvotes}}
+          </span>
+          <a href="#/albums/{{$index}}"><span>{{album.name}}</span></a>
+          <br />
+          <img src="../resources/photos/albums/{{album.name}}/{{album.thumb}}" />
+        </li>
+      </ul>
+    </script>
+    <script type="text/ng-template" id="/albums.html">
+      <ul>
+        <li class="left20" ng-repeat="photo in album.photos | orderBy: '-upvotes'">
+          <span ng-click="incrementUpvotesPhoto(photo)"><img src="../resources/photos/thumbsUp.png"/>
+            {{photo.upvotes}}
+          </span>
+          <a href="#/picture/{{$index}}/{{$index}}"><span>{{photo.name}}</span></a>
+          <br/>
+          <img src="../resources/photos/albums/{{album.name}}/{{photo.link}}" />
+        </li>
+      </ul>
+      <br /><br />
+      <ul class="left100 mbottom50 mtop50">
+        <li ng-repeat="comment in album.comments | orderBy: '-upvotes'">
+          <span ng-click="incrementUpvotesComment(comment)"><img src="../resources/photos/thumbsUp.png"/>
+            {{comment.upvotes}}
+          </span>
+          <span style="font-weight: bold; padding-left: 20px;">{{comment.author}}:</span> {{comment.body}}
+        </li>
+      </ul>
+      <br /><br />
+      <form class="left100 mbottom50" ng-submit="addComment()">
+        <h3>Add a new comment</h3>
+        <input type="text" placeholder="comment" ng-model="body" />
+        <button type="submit">Post</button>
+      </form>
+    </script>
+    <script type="text/ng-template" id="/picture.html">
+      <div class="left40 mw500">
+        <img class="photo" src="../resources/photos/albums/{{album.name}}/{{photo.link}}" />
+      </div>
+      <div class="right50">
+        <ul>
+          <li ng-repeat="comment in photo.comments | orderBy: '-upvotes'">
+            <span ng-click="incrementUpvotes(comment)"><img src="../resources/photos/thumbsUp.png"/>
+              {{comment.upvotes}}
+            </span>
+            <span style="font-weight: bold; padding-left: 20px;">{{comment.author}}:</span> {{comment.body}}
+          </li>
+        </ul>
+        <br /><br />
+        <form ng-submit="addComment()">
+          <h3>Add a new comment</h3>
+          <input type="text" placeholder="comment" ng-model="body" />
+          <button type="submit">Post</button>
+        </form>
+      </div>
+    </script>
+</body>
+
+</html>
