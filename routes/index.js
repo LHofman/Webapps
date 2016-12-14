@@ -120,8 +120,6 @@ router.put('/albums/:album/photos/:photo/upvote', auth, function(req, res, next)
   });
 });
 router.post('/albums/:album/photos/:photo/comments', auth, function(req, res, next){
-  console.log("username");
-  console.log(req.payload.username);
   var comment = new Comment(req.body);
   comment.author = req.payload.username;
   comment.save(function(err, comment){

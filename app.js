@@ -13,7 +13,7 @@ require('./models/Comments');
 require('./models/Users');
 require('./config/passport');
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/news');
+mongoose.connect('mongodb://<dbuser>:<dbpassword>@ds052819.mlab.com:52819/vandaelefotografie');
 
 
 var index = require('./routes/index');
