@@ -13,7 +13,7 @@ require('./models/Comments');
 require('./models/Users');
 require('./config/passport');
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://<dbuser>:<dbpassword>@ds052819.mlab.com:52819/vandaelefotografie');
+mongoose.connect('mongodb://LHofman:Lh1693821@ds052819.mlab.com:52819/vandaelefotografie');
 
 
 var index = require('./routes/index');
@@ -25,8 +25,8 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// uncomment after placing your favicon in /public
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
