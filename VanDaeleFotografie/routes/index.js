@@ -33,7 +33,7 @@ router.param('comment', function(req, res, next, id){
   });
 });
 router.param('photo', function(req, res, next, id){
-  var query = Photo.findById(photo);
+  var query = Photo.findById(id);
   query.exec(function(err, photo){
     if(err){return next(err);}
     if(!photo){return next(new Error('Can\'t find photo'));}
@@ -51,7 +51,6 @@ router.get('/albums', function(req, res, next){
 });
 router.post('/albums', auth, function(req, res, next){
   var album = new Album(req.body);
-  album.author = req.payload.username;
   album.save(function(err, album){
     if (err){return next(err);}
     res.json(album);
@@ -60,11 +59,11 @@ router.post('/albums', auth, function(req, res, next){
 router.get('/albums/:album', function(req, res, next){
   req.album.populate('comments', function(err, album){
     if(err){return next(err);}
-  });
-  req.album.populate('photos', function(err, album){
+  }).populate('photos', function(err, album){
     if(err){return next(err);}
+
+    res.json(album);
   });
-  res.json(req.album);
 });
 router.put('/albums/:album/upvote', auth, function(req, res, next){
   req.album.upvote(function(err, album){
@@ -74,7 +73,6 @@ router.put('/albums/:album/upvote', auth, function(req, res, next){
 });
 router.post('/albums/:album/comments', auth, function(req, res, next){
   var comment = new Comment(req.body);
-  comment.album = req.album;
   comment.author = req.payload.username;
   comment.save(function(err, comment){
     if(err){return next(err);}
@@ -98,7 +96,7 @@ router.get('/albums/:album/photos', function(req, res, next){
     res.json(photos);
   });
 });
-router.post('/albums/:album/photos', function(req, res, next){
+router.post('/albums/:album/photos', auth, function(req, res, next){
   var photo = new Photo(req.body);
   photo.save(function(err, photo){
     if(err){return next(err);}
@@ -112,17 +110,20 @@ router.post('/albums/:album/photos', function(req, res, next){
 router.get('/albums/:album/photos/:photo', function(req, res, next){
   req.photo.populate('comments', function(err, photo){
     if(err){return next(err);}
-    res.json(req.photo);
+    res.json(photo);
   });
 });
-router.put('/albums/:album/photos/:photo/upvote', function(req, res, next){
+router.put('/albums/:album/photos/:photo/upvote', auth, function(req, res, next){
   req.photo.upvote(function(err, photo){
     if(err){return next(err);}
     res.json(photo);
   });
 });
-router.post('albums/:album/photos/:photo/comments', function(req, res, next){
+router.post('/albums/:album/photos/:photo/comments', auth, function(req, res, next){
+  console.log("username");
+  console.log(req.payload.username);
   var comment = new Comment(req.body);
+  comment.author = req.payload.username;
   comment.save(function(err, comment){
     if(err){return next(err);}
     req.photo.comments.push(comment);
@@ -132,8 +133,8 @@ router.post('albums/:album/photos/:photo/comments', function(req, res, next){
     });
   });
 });
-router.put('albums/:album/photos/:photo/comments/:comment/upvote', function(req, res, next){
-  req.comment.upvote(function(err, photo){
+router.put('/albums/:album/photos/:photo/comments/:comment/upvote', auth, function(req, res, next){
+  req.comment.upvote(function(err, comment){
     if(err){return next(err);}
     res.json(comment);
   });
@@ -147,12 +148,13 @@ router.post('/register', function(req, res, next){
   user.username = req.body.username;
   user.setPassword(req.body.password);
   user.save(function(err){
+    console.log(err);
     if(err){return next(err);}
     return res.json({token: user.generateJWT()})
   });
 });
 router.post('/login', function(req, res, next){
-  if(!req.body.username || !!req.body.password){
+  if(!req.body.username || !req.body.password){
     return res.status(400).json({message: 'Please fill out all fields'});
   }
   passport.authenticate('local', function(err, user, info){

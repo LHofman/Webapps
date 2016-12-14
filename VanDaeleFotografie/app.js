@@ -12,6 +12,7 @@ require('./models/Photos');
 require('./models/Comments');
 require('./models/Users');
 require('./config/passport');
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/news');
 
 

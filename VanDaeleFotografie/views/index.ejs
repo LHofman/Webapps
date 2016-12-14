@@ -8,7 +8,7 @@
     <script src="/javascripts/angularApp.js"></script>
   </head>
   <body>
-    <nav ng-controller="NavCtrl">
+    <nav ng-controller="NavCtrl" id="nav">
       <ul>
         <li ng-show="isLoggedIn()"><a>{{currentUser()}}</a></li>
         <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
@@ -21,10 +21,9 @@
         <li><a href="#/home">Home</a></li>
         <li><a href="#/albums">Albums</a></li>
         <li><a href="#/links">Links</a></li>
-        <li><a href="#/contact">Contact</a></li>
       </ul>
     </div>
-    <div>
+    <div id="content">
       <ui-view></ui-view>
     </div>
     <script type="text/ng-template" id="/home.html">
@@ -44,7 +43,7 @@
     <script type="text/ng-template" id="/albums.html">
       <div id="albums">
         <ul>
-          <li class="left20" ng-repeat="album in albums | orderBy: '-upvotes'">
+          <li class="left20" ng-repeat="album in albums | orderBy: '-name':true">
             <span ng-click="incrementUpvotes(album)"><img class="square20" src="../resources/photos/thumbsUp.png"/>
               {{album.upvotes}}
             </span>
@@ -54,46 +53,65 @@
           </li>
         </ul>
       </div>
+      <form class="left100" ng-submit="addAlbum()" ng-show="isAdmin()">
+        <h3>Add a new album</h3>
+        <input type="text" ng-model="title" placeholder="naam" />
+        <input type="text" ng-model="thumb" placeholder="thumbnail: voorbeeld.jpg" />
+        <button type="submit">Add</button>
+      </form>
     </script>
     <script type="text/ng-template" id="/photos.html">
+      <div class="left100 mbottom50">
+        <a href="#/albums" style="font-size: 25px;">Go Back</a>
+      </div>
       <div id="albums">
         <ul>
-          <li class="left20" ng-repeat="photo in album.photos | orderBy: '-upvotes'">
+          <li class="left20" ng-repeat="photo in album.photos | orderBy: '-name': true">
             <span ng-click="incrementUpvotesPhoto(photo)"><img class="square20" src="../resources/photos/thumbsUp.png"/>
               {{photo.upvotes}}
             </span>
-            <a href="#/picture/{{$index}}/{{$index}}"><span>{{photo.name}}</span></a>
+            <a href="#/picture/{{album._id}}/{{photo._id}}"><span>{{photo.name}}</span></a>
             <br/>
-            <img src="../resources/photos/albums/{{album.name}}/{{photo.link}}" />
+            <img src="../resources/photos/albums/{{album.name}}/{{photo.name}}.{{photo.extensie}}" />
           </li>
         </ul>
         <br /><br />
         <ul class="left100 mbottom50 mtop50">
           <li ng-repeat="comment in album.comments | orderBy: '-upvotes'">
             <span ng-click="incrementUpvotesComment(comment)"><img src="../resources/photos/thumbsUp.png"/>
-              {{comment.upvotes}}
-            </span>
+              {{comment.upvotes}}</span>
             <span style="font-weight: bold; padding-left: 20px;">{{comment.author}}:</span> {{comment.body}}
+            <br/>
           </li>
         </ul>
+        <br /><br />
+        <form class="left100 mbottom50" ng-submit="addPhoto()" ng-show="isAdmin()">
+          <h3>Add a new photo</h3>
+          <input type="text" ng-model="name" placeholder="name photo" />
+          <input type="text" ng-model="extensie" placeholder="extensie (png/jpg)" />
+          <button type="submit">Add</button>
+        </form>
         <br /><br />
         <form class="left100 mbottom50" ng-submit="addComment()" ng-show="isLoggedIn()">
           <h3>Add a new comment</h3>
           <input type="text" placeholder="comment" ng-model="body" />
           <button type="submit">Post</button>
         </form>
-        <div ng-hide="isLoggedIn()">
+        <div class="left100 mbottom50" ng-hide="isLoggedIn()">
           <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can leave a comment</h3>
         </div>
       </div>
     </script>
     <script type="text/ng-template" id="/picture.html">
+      <div class="left100 mbottom50">
+        <a href="#/photos/{{album._id}}" style="font-size: 25px">Go Back</a>
+      </div>
       <div class="left40 mw500">
-        <img class="photo" src="../resources/photos/albums/{{album.name}}/{{photo.link}}" />
+        <img class="photo" src="../resources/photos/albums/{{album.name}}/{{photo.name}}.{{photo.extensie}}" />
       </div>
       <div class="right50">
         <ul>
-          <li ng-repeat="comment in photo.comments | orderBy: '-upvotes'">
+          <li class="cleanlist" ng-repeat="comment in photo.comments | orderBy: '-upvotes'">
             <span ng-click="incrementUpvotes(comment)"><img style="width: 20px;" src="../resources/photos/thumbsUp.png"/>
               {{comment.upvotes}}
             </span>
@@ -118,39 +136,6 @@
         <h3 class="mbottom50"><a target="_blank" href="https://www.flickr.com/photos/144254529@N03">Flickr</a></h3>
         <h3 class="mbottom50"><a target="_blank" href="http://google.be/">Instagram</a></h3>
         <h3 class="mbottom50"><a target="_blank" href="http://google.be/">Pinterest</a></h3>
-      </div>
-    </script>
-    <script type="text/ng-template" id="/contact.html">
-      <div id="content">
-        <form name="mailForm" ng-submit="sendMail(mailInfo)">
-          <label>Email: </label>
-          <input type="email" name="email"
-            ng-model="mailInfo.email"
-            ng-required="true"/>
-          <span class="error-message"
-            ng-show="mailForm.email.$dirty &&
-            mailForm.email.$invalid">
-            Gelieve een geldig email-adres in te geven</span>
-          <br /><br />
-
-          <label>Tekst:</label><br />
-          <textarea rows="10" cols="50" name="body"
-            ng-model = "mailInfo.body"
-            ng-required="true" ng-minLength="50"></textarea>
-          <span class="error-message"
-            ng-show="mailForm.body.$dirty &&
-            mailForm.body.$error.required">
-            Gelieve een tekst in te geven</span>
-          <span class="error-message"
-            ng-show="mailForm.body.$dirty &&
-            mailForm.body.$error.minlength">
-            Gelieve minstens 50 letters in te geven</span>
-          <br /><br />
-
-          <input type="submit" value="Stuur mail"
-            ng-disabled="mailForm.$invalid"/>
-
-        </form>
       </div>
     </script>
     <script type="text/ng-template" id="/register.html">
