@@ -1,5 +1,6 @@
 var app = angular.module('app', ['ui.router']);
 
+//config routes right script to the view
 app.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider.state('home', {
         url: '/home',
@@ -58,6 +59,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     });
     $urlRouterProvider.otherwise('home');
 });
+//factory holds all the 'albums'-objects
 app.factory('albums', function($http, auth) {
     var o = {
         albums: []
@@ -150,6 +152,7 @@ app.factory('albums', function($http, auth) {
 
     return o;
 });
+//factory takes care of authentification
 app.factory('auth', function($http, $window) {
     var auth = {};
 
@@ -204,6 +207,7 @@ app.factory('auth', function($http, $window) {
     return auth;
 })
 
+//controller takes care of the functionality of the 'albums' page
 app.controller('AlbumsCtrl', function($scope, albums, auth) {
     $scope.isLoggedIn = auth.isLoggedIn;
     $scope.isAdmin = auth.isAdmin(auth.currentUser());
@@ -225,6 +229,7 @@ app.controller('AlbumsCtrl', function($scope, albums, auth) {
         albums.upvote(album);
     }
 });
+//controller takes care of the functionality of the 'photos' page
 app.controller('PhotosCtrl', function($scope, albums, album, auth) {
     $scope.isLoggedIn = auth.isLoggedIn;
     $scope.isAdmin = auth.isAdmin(auth.currentUser());
@@ -260,6 +265,7 @@ app.controller('PhotosCtrl', function($scope, albums, album, auth) {
         albums.upvoteComment(album, comment);
     }
 });
+//controller takes care of the functionality of the 'picture' page
 app.controller('PictureCtrl', function($scope, albums, album, photo, auth) {
     $scope.isLoggedIn = auth.isLoggedIn;
     $scope.album = album;
@@ -281,6 +287,7 @@ app.controller('PictureCtrl', function($scope, albums, album, photo, auth) {
     }
 });
 
+//controller takes care of the functionality of the 'authentification' pages
 app.controller('AuthCtrl', function($scope, $state, auth) {
     $scope.user = {};
     $scope.register = function() {
@@ -298,6 +305,7 @@ app.controller('AuthCtrl', function($scope, $state, auth) {
         });
     }
 })
+//controller takes care of the functionality needed by the navigation
 app.controller('NavCtrl', function($scope, auth) {
     $scope.isLoggedIn = auth.isLoggedIn;
     $scope.currentUser = auth.currentUser;
