@@ -4,15 +4,21 @@
     Welcome to your calendar!
   </h1>
 </div>
-<ul>
-  <li *ngFor="let day of dates" style="list-style-type: none">
-    <h1>{{day}}</h1>
-    <ul>
-      <app-task *ngFor="let task of tasksForDate(day)" [_task]="task">  
+<div style="width: 700px;float: left">
+  <ul>
+    <li *ngFor="let day of dates" style="list-style-type: none">
 
-      </app-task>
-    </ul>
-  </li>
-</ul>
+      <h1>{{day}}</h1>
+      <ul>
+        <app-task *ngFor="let task of tasksForDate(day)" [_task]="task">
 
-<app-add-task (newTask)="newTaskAdded($event)"></app-add-task>
+        </app-task>
+      </ul>
+
+    </li>
+  </ul>
+</div>
+
+<div style="width: 200px; float:left">
+  <app-add-task (newTask)="newTaskAdded($event)"></app-add-task>
+</div>

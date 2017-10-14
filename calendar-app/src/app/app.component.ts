@@ -42,7 +42,7 @@ export class AppComponent {
 
     this._tasks = this._taskDataService.tasks;
 
-    for (let i = 16; i <= 21; i++) {
+    for (let i = 16; i <= 29; i++) {
       this._dates.push(new Date(2017, 9, i));
     }
 
