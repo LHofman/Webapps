@@ -2,7 +2,7 @@
 
 Invitees:
 <ul>
-  <li *ngFor="let invitee of invitees">
-    <app-user [firstName] = "invitee"></app-user>
+  <li *ngFor="let user of users">
+    <app-user [_user] = "user"></app-user>
   </li>
 </ul>

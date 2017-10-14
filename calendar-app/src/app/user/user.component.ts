@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
+import {User} from './user.model';
 
 @Component({
   selector: 'app-user',
@@ -7,11 +8,15 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class UserComponent implements OnInit {
 
-  @Input() firstName: string;
+  @Input() _user: User;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  get firstname(): string {
+    return this._user.firstname;
   }
 
 }

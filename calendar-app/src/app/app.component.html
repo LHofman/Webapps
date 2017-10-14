@@ -5,6 +5,9 @@
   </h1>
 </div>
 <ul>
-  <app-task></app-task>
+  <app-day *ngFor="let day of _days" 
+    [_day] = "day">
+
+  </app-day>
 </ul>
 

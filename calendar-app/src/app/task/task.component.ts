@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import {Task} from './task.model';
+import {User} from '../user/user.model';
 
 @Component({
   selector: 'app-task',
@@ -7,15 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TaskComponent implements OnInit {
 
-  title: string;
-  invitees: string[];
+  @Input() _task: Task;
 
-  constructor() {
-    this.title = 'Badminton';
-    this.invitees = ['Lennert', 'Jan'];
-  }
+  constructor() {}
 
   ngOnInit() {
+  }
+
+  get title(): string {
+    return this._task.title;
+  }
+
+  get users(): User[] {
+    return this._task.users;
   }
 
 }
