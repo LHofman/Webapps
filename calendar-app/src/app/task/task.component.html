@@ -1,8 +1,8 @@
 <h1>{{title}}</h1>
 
-Attendees:
+Invitees:
 <ul>
   <li *ngFor="let invitee of invitees">
-    {{invitee}}
+    <app-user [firstName] = "invitee"></app-user>
   </li>
 </ul>
