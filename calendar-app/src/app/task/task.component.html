@@ -1,4 +1,4 @@
-<h1>{{title}}</h1>
+<h2>{{title}}</h2>
 
 Invitees:
 <ul>
@@ -6,3 +6,5 @@ Invitees:
     <app-user [_user] = "user"></app-user>
   </li>
 </ul>
+
+<app-add-user (newUser)="newUserAdded($event)"></app-add-user>

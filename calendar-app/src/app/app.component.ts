@@ -1,32 +1,45 @@
+import { TaskDataService } from './task-data.service';
+import { UserDataService } from './user-data.service';
 import { Component } from '@angular/core';
 import {Task} from './task/task.model';
 import {User} from './user/user.model';
-import {Day} from './day/day.model';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [UserDataService, TaskDataService]
 })
 export class AppComponent {
 
-  private _days = new Array<Day>();
+  private _tasks: Task[];
+  private _dates = new Array<Date>();
 
-  constructor() {
-    const _tasks = new Array<Task>();
-    const task1 = new Task('Badminton');
-    task1.addUsers(new User('Lennert'), new User('Jan'));
-    const task2 = new Task('Rugby');
-    task2.addUsers(new User('Quinten'), new User('Gino'), new User('Marita'));
-    _tasks.push(task1, task2);
+  constructor(private _userDataService: UserDataService,
+    private _taskDataService: TaskDataService) {
 
-    const day1 = new Day(new Date(2017, 10, 14));
-    day1.addTasks(task1, task2);
-    const day2 = new Day(new Date(2017, 10, 16));
-    day2.addTasks(task2);
+    this._taskDataService.addUsers(this._taskDataService.findTask('Badminton'), ...this._userDataService.findUsers('Lennert'));
+    this._taskDataService.addUsers(this._taskDataService.findTask('Rugby'), ...this._userDataService.findUsers('Quinten', 'Marita'));
+    this._taskDataService.addUsers(this._taskDataService.findTask('Tennis'), ...this._userDataService.findUsers('Gino', 'Marita'));
 
-    this._days.push(day1, day2);
+    this._tasks = this._taskDataService.tasks;
 
+    for (let i = 16; i <= 22; i++) {
+      this._dates.push(new Date(2017, 9, i));
+    }
+
+  }
+
+  newTaskAdded(task) {
+    this._taskDataService.addNewTask(task);
+  }
+
+  get dates(): string[] {
+    return this._dates.map(date => date.toDateString());
+  }
+
+  tasksForDate(date): Task[] {
+    return this._taskDataService.findTasksOnDate(new Date(date));
   }
 
 }

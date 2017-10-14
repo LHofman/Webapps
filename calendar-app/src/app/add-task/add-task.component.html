@@ -1,0 +1,12 @@
+<form>
+  <h3>Add a Task</h3>
+  <div>
+    <label for="title">Title: </label>
+    <input name="title" #newtasktitle>
+  </div>
+  <div>
+    <label for="date">Date: </label>
+    <input name="date" type="date" #newtaskdate>
+  </div>
+  <button (click)="addTask(newtasktitle, newtaskdate)">Add Task</button>
+</form>

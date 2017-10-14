@@ -5,9 +5,14 @@
   </h1>
 </div>
 <ul>
-  <app-day *ngFor="let day of _days" 
-    [_day] = "day">
+  <li *ngFor="let day of dates" style="list-style-type: none">
+    <h1>{{day}}</h1>
+    <ul>
+      <app-task *ngFor="let task of tasksForDate(day)" [_task]="task">  
 
-  </app-day>
+      </app-task>
+    </ul>
+  </li>
 </ul>
 
+<app-add-task (newTask)="newTaskAdded($event)"></app-add-task>

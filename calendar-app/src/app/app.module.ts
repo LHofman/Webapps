@@ -4,14 +4,16 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { TaskComponent } from './task/task.component';
 import { UserComponent } from './user/user.component';
-import { DayComponent } from './day/day.component';
+import { AddUserComponent } from './add-user/add-user.component';
+import { AddTaskComponent } from './add-task/add-task.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TaskComponent,
     UserComponent,
-    DayComponent
+    AddUserComponent,
+    AddTaskComponent
   ],
   imports: [
     BrowserModule
