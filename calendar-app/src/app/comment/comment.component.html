@@ -1,9 +1,18 @@
-<h4>{{title}}</h4>
-<p>{{body}}</p>
-<ul>
-  <li *ngFor="let comment of comments">
-    <app-comment [_comment] = "comment"></app-comment>
-  </li>
-</ul>
+<accordion [showArrows]="true" [closeOthers]="false" [expandAll]="false">
 
-<app-add-comment (newComment)="newCommentAdded($event)"></app-add-comment>
+  
+  <accordion-group heading="{{title}} &#9660;">
+    
+    <p id="commentBody">{{body}}</p>
+    <br><br>
+
+    Comments: 
+    <ul>
+      <li *ngFor="let comment of comments">
+        <app-comment [_comment] = "comment"></app-comment>
+      </li>
+    </ul>
+    
+    <app-add-comment (newComment)="newCommentAdded($event)"></app-add-comment>
+  </accordion-group>
+</accordion>

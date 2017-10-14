@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {AccordionModule} from 'ngx-accordion';
 
 import { AppComponent } from './app.component';
 import { TaskComponent } from './task/task.component';
@@ -22,7 +23,8 @@ import { AddCommentComponent } from './add-comment/add-comment.component';
     AddCommentComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AccordionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
