@@ -1,3 +1,4 @@
+import { Group } from '../group/group.model';
 import { UserDataService } from '../user-data.service';
 import { Component, OnInit, Input } from '@angular/core';
 import {Task} from './task.model';
@@ -18,6 +19,8 @@ export class TaskComponent implements OnInit {
   ngOnInit() {
   }
 
+  //#region getters
+
   get title(): string {
     return this._task.title;
   }
@@ -29,6 +32,16 @@ export class TaskComponent implements OnInit {
   get dateFormatted(): string {
     return this._task.date.toDateString();
   }
+
+  get location(): string {
+    return this._task.location;
+  }
+
+  get groups(): Group[] {
+    return this._task.groups;
+  }
+
+  //#endregion getters
 
   newUserAdded(user) {
     this._userDataService.addNewUser(user);

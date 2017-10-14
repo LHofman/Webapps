@@ -8,5 +8,9 @@
     <label for="date">Date: </label>
     <input name="date" type="date" #newtaskdate>
   </div>
-  <button (click)="addTask(newtasktitle, newtaskdate)">Add Task</button>
+  <div>
+    <label for="location">Location: </label>
+    <input name="location" #newtasklocation>
+  </div>
+  <button (click)="addTask(newtasktitle, newtaskdate, newtasklocation)">Add Task</button>
 </form>

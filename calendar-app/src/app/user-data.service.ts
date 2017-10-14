@@ -12,8 +12,9 @@ export class UserDataService {
     const user2 = new User('Quinten');
     const user3 = new User('Gino');
     const user4 = new User('Marita');
+    const user5 = new User('Jan');
 
-    this._users.push(user1, user2, user3, user4);
+    this._users.push(user1, user2, user3, user4, user5);
   }
 
   get users(): User[] {
