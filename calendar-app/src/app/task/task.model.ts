@@ -1,3 +1,4 @@
+import { Comment } from '../comment/comment.model';
 import { Group } from '../group/group.model';
 import {User} from '../user/user.model';
 export class Task {
@@ -7,6 +8,7 @@ export class Task {
     private _location: string;
     private _users = new Array<User>();
     private _groups = new Array<Group>();
+    private _comments = new Array<Comment>();
 
     constructor(title: string, date: Date, location: string) {
         this._title = title;
@@ -23,6 +25,12 @@ export class Task {
     addGroups(...groups) {
         for (const group of groups) {
             this._groups.push(group);
+        }
+    }
+
+    addComments(...comments) {
+        for (const comment of comments) {
+            this._comments.push(comment);
         }
     }
 
@@ -44,6 +52,10 @@ export class Task {
 
     get groups(): Group[] {
         return this._groups;
+    }
+
+    get comments(): Comment[] {
+        return this._comments;
     }
 
 }

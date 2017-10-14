@@ -1,3 +1,5 @@
+import { CommentDataService } from '../comment-data.service';
+import { Comment } from '../comment/comment.model';
 import { Group } from '../group/group.model';
 import { UserDataService } from '../user-data.service';
 import { Component, OnInit, Input } from '@angular/core';
@@ -8,13 +10,14 @@ import {User} from '../user/user.model';
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.css'],
-  providers: [UserDataService]
+  providers: [UserDataService, CommentDataService]
 })
 export class TaskComponent implements OnInit {
 
   @Input() _task: Task;
 
-  constructor(private _userDataService: UserDataService) {}
+  constructor(private _userDataService: UserDataService,
+    private _commentDataService: CommentDataService) {}
 
   ngOnInit() {
   }
@@ -41,11 +44,20 @@ export class TaskComponent implements OnInit {
     return this._task.groups;
   }
 
+  get comments(): Comment[] {
+    return this._task.comments;
+  }
+
   //#endregion getters
 
   newUserAdded(user) {
     this._userDataService.addNewUser(user);
     this._task.addUsers(user);
+  }
+
+  newCommentAdded(comment) {
+    this._commentDataService.addComments(comment);
+    this._task.addComments(comment);
   }
 
 }

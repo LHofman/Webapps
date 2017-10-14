@@ -1,0 +1,9 @@
+<h4>{{title}}</h4>
+<p>{{body}}</p>
+<ul>
+  <li *ngFor="let comment of comments">
+    <app-comment [_comment] = "comment"></app-comment>
+  </li>
+</ul>
+
+<app-add-comment (newComment)="newCommentAdded($event)"></app-add-comment>

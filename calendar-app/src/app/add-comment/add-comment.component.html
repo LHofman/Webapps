@@ -1,0 +1,12 @@
+<form>
+  <h3>Add a Comment</h3>
+  <div>
+    <label for="title">Title: </label>
+    <input name="title" #newcommenttitle>
+  </div>
+  <div>
+    <label for="body">Body: </label>
+    <input name="body" #newcommentbody>
+  </div>
+  <button (click)="addComment(newcommenttitle, newcommentbody)">Add Comment</button>
+</form>

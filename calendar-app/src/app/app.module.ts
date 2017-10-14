@@ -7,6 +7,8 @@ import { UserComponent } from './user/user.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { GroupComponent } from './group/group.component';
+import { CommentComponent } from './comment/comment.component';
+import { AddCommentComponent } from './add-comment/add-comment.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { GroupComponent } from './group/group.component';
     UserComponent,
     AddUserComponent,
     AddTaskComponent,
-    GroupComponent
+    GroupComponent,
+    CommentComponent,
+    AddCommentComponent
   ],
   imports: [
     BrowserModule
