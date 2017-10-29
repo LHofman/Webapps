@@ -16,6 +16,7 @@ import { TaskPageComponent } from './task-page/task-page.component';
 import { UserPageComponent } from './user-page/user-page.component';
 
 const appRoutes = [
+  {path: '/'},
   {path: 'day/:year/:month/:day', component: DayComponent},
   {path: 'task/:taskId', component: TaskPageComponent},
   {path: 'user/:userId', component: UserPageComponent}
