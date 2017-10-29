@@ -1,0 +1,15 @@
+<h2>{{date}} </h2>
+<br>
+<ul>
+  <li *ngFor="let task of tasks">
+    <accordion [showArrows]="true" [closeOthers]="false" [expandAll]="false">
+      <accordion-group>
+        <accordion-heading>
+          {{task.title}} <a [routerLink]="['/task', task.id]"><span class="glyphicon glyphicon-new-window"></span></a> ({{getTime(task.startTime, task.endTime)}})
+        </accordion-heading>
+        <app-task [_task]="task"></app-task>
+      </accordion-group>
+    </accordion>
+    
+  </li>
+</ul>

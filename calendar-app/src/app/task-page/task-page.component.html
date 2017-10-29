@@ -1,0 +1,26 @@
+<div *ngIf="task; else notFound">  
+  <h1>{{title}}</h1>
+  <i>{{location}} ({{getTime()}})</i>
+  <br><br>
+  <strong>Invitees:</strong>
+  <ul>
+    <li *ngFor="let user of users">
+      <app-user [_user]="user"></app-user>
+    </li>
+  </ul>
+  <br><br>
+  <strong>Comments:</strong>
+  <ul class="noBullet">
+    <li *ngFor="let comment of comments">
+      <app-comment [_comment]="comment"></app-comment>
+    </li>
+  </ul>
+
+  <app-add-user (newUser)="newUserAdded($event)"></app-add-user>
+  <app-add-comment (newComment)="newCommentAdded($event)"></app-add-comment>
+
+</div>
+
+<ng-template #notFound>
+  <h4>A task with this ID does not exist</h4>
+</ng-template>

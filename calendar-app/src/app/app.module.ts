@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {AccordionModule} from 'ngx-accordion';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { TaskComponent } from './task/task.component';
@@ -10,6 +11,13 @@ import { AddTaskComponent } from './add-task/add-task.component';
 import { GroupComponent } from './group/group.component';
 import { CommentComponent } from './comment/comment.component';
 import { AddCommentComponent } from './add-comment/add-comment.component';
+import { DayComponent } from './day/day.component';
+import { TaskPageComponent } from './task-page/task-page.component';
+
+const appRoutes = [
+  {path: 'day/:year/:month/:day', component: DayComponent},
+  {path: 'task/:taskId', component: TaskPageComponent}
+];
 
 @NgModule({
   declarations: [
@@ -20,11 +28,14 @@ import { AddCommentComponent } from './add-comment/add-comment.component';
     AddTaskComponent,
     GroupComponent,
     CommentComponent,
-    AddCommentComponent
+    AddCommentComponent,
+    DayComponent,
+    TaskPageComponent
   ],
   imports: [
     BrowserModule,
-    AccordionModule
+    AccordionModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]

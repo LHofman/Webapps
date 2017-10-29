@@ -10,8 +10,9 @@ export class AddTaskComponent {
 
   @Output() public newTask = new EventEmitter<Task>();
 
-  addTask(newTaskTitle: HTMLInputElement, newTaskDate: HTMLInputElement, newTaskLocation: HTMLInputElement): boolean {
-    const task = new Task(newTaskTitle.value, new Date(newTaskDate.value), newTaskLocation.value);
+  addTask(newTaskTitle: HTMLInputElement, newTaskStartTime: HTMLInputElement, newTaskEndTime: HTMLInputElement,
+      newTaskLocation: HTMLInputElement): boolean {
+    const task = new Task(7, newTaskTitle.value, new Date(newTaskStartTime.value), new Date(newTaskEndTime.value), newTaskLocation.value);
     this.newTask.emit(task);
     return false;
   }

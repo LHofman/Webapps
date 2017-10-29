@@ -3,17 +3,25 @@ import { Group } from '../group/group.model';
 import {User} from '../user/user.model';
 export class Task {
 
+    private _id: number;
     private _title: string;
-    private _date: Date;
+    private _startTime: Date;
+    private _endTime: Date;
     private _location: string;
     private _users = new Array<User>();
     private _groups = new Array<Group>();
     private _comments = new Array<Comment>();
 
-    constructor(title: string, date: Date, location: string) {
+    constructor(id: number, title: string, startTime: Date, endTime: Date, location: string) {
+        this._id = id;
         this._title = title;
-        this._date = date;
+        this._startTime = startTime;
+        this._endTime = endTime;
         this._location = location;
+    }
+
+    get id(): number {
+        return this._id;
     }
 
     addUsers(...users) {
@@ -42,8 +50,12 @@ export class Task {
         return this._users;
     }
 
-    get date(): Date {
-        return this._date;
+    get startTime(): Date {
+        return this._startTime;
+    }
+
+    get endTime(): Date {
+        return this._endTime;
     }
 
     get location(): string {

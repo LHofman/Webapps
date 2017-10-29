@@ -32,8 +32,21 @@ export class TaskComponent implements OnInit {
     return this._task.users;
   }
 
-  get dateFormatted(): string {
-    return this._task.date.toDateString();
+  get startTime(): string {
+    return this.getTime(this._task.startTime);
+  }
+
+  get endTime(): string {
+    return this.getTime(this._task.endTime);
+  }
+
+  private getTime(time: Date): string {
+    let out = '';
+    if (this._task.startTime.toDateString() !== this._task.endTime.toDateString()) {
+      out = time.toDateString();
+    }
+    out += time.toLocaleTimeString();
+    return out;
   }
 
   get location(): string {

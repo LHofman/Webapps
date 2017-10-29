@@ -5,12 +5,16 @@
     <input name="title" #newtasktitle>
   </div>
   <div>
-    <label for="date">Date: </label>
-    <input name="date" type="date" #newtaskdate>
+    <label for="startTime">Starting Time: </label>
+    <input name="startTime" type="date" #newtaskstarttime>
   </div>
+  <div>
+      <label for="endTime">Ending Time: </label>
+      <input name="endTime" type="date" #newtaskendtime>
+    </div>
   <div>
     <label for="location">Location: </label>
     <input name="location" #newtasklocation>
   </div>
-  <button (click)="addTask(newtasktitle, newtaskdate, newtasklocation)">Add Task</button>
+  <button (click)="addTask(newtasktitle, newtaskstarttime, newtaskendtime, newtasklocation)">Add Task</button>
 </form>

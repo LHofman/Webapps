@@ -1,23 +1,9 @@
-<accordion [showArrows]="true" [closeOthers]="false" [expandAll]="false">
-  <accordion-group heading="{{title}} &#9660;">
-
-    <i>{{location}}</i>
-    <br>
-    <br> Invitees:
-    <ul>
-      <li *ngFor="let user of users">
-        <app-user [_user]="user"></app-user>
-      </li>
-    </ul>
-    Comments
-    <ul>
-      <li *ngFor="let comment of comments">
-        <app-comment [_comment]="comment"></app-comment>
-      </li>
-    </ul>
-
-    <app-add-user (newUser)="newUserAdded($event)"></app-add-user>
-    <app-add-comment (newComment)="newCommentAdded($event)"></app-add-comment>
-
-  </accordion-group>
-</accordion>
+<h2>{{title}}</h2>
+<i>{{location}} &emsp; ({{startTime}} - {{endTime}})</i>
+<br>
+<br> Invitees:
+<ul>
+  <li *ngFor="let user of users">
+    <app-user [_user]="user"></app-user>
+  </li>
+</ul>
