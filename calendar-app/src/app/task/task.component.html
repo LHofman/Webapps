@@ -1,5 +1,14 @@
 <h2>{{title}}</h2>
-<i>{{location}} &emsp; ({{startTime}} - {{endTime}})</i>
+<i>{{location}}</i>
+<br>
+<p>{{startTime}}
+  <a [routerLink]="['/day', startDate.getFullYear(), startDate.getMonth(), startDate.getDate()]">
+    <span class="glyphicon glyphicon-new-window"></span>
+  </a> - {{endTime}}
+  <a [routerLink]="['/day', endDate.getFullYear(), endDate.getMonth(), endDate.getDate()]">
+    <span class="glyphicon glyphicon-new-window"></span>
+  </a>
+</p>
 <br>
 <br> Invitees:
 <ul>

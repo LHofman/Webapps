@@ -19,4 +19,12 @@ export class UserComponent implements OnInit {
     return this._user.firstname;
   }
 
+  get name(): string {
+    return this._user.name;
+  }
+
+  get id(): number {
+    return this._user.id;
+  }
+
 }

@@ -8,13 +8,12 @@ export class UserDataService {
   private _users = new Array<User>();
 
   constructor() {
-    const user1 = new User('Lennert');
-    const user2 = new User('Quinten');
-    const user3 = new User('Gino');
-    const user4 = new User('Marita');
-    const user5 = new User('Jan');
+    const user1 = new User(1, 'Lennert', 'Hofman');
+    const user2 = new User(2, 'Quinten', 'Hofman');
+    const user3 = new User(3, 'Gino', 'Hofman');
+    const user4 = new User(4, 'Marita', 'Van Daele');
 
-    this._users.push(user1, user2, user3, user4, user5);
+    this._users.push(user1, user2, user3, user4);
   }
 
   get users(): User[] {
@@ -25,12 +24,9 @@ export class UserDataService {
     this._users.push(user);
   }
 
-  findUsers(...firstnames): User[] {
-    return this._users.filter(user => firstnames.indexOf(user.firstname) > -1);
-  }
-
-  findUser(firstname): User {
-    return this._users.find(user => user.firstname === firstname);
+  findUser(id): User {
+    // tslint:disable-next-line:triple-equals
+    return this._users.find(user => user.id == id);
   }
 
 }

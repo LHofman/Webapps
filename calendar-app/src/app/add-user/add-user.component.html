@@ -1,8 +1,12 @@
 <form>
   <h3>Add a User</h3>
   <div>
+      <label for="firstname">Firstname: </label>
+      <input name="firstname" #newuserfirstname>
+    </div>
+  <div>
     <label for="name">Name: </label>
     <input name="name" #newusername>
   </div>
-  <button (click)="addUser(newusername)">Add User</button>
+  <button (click)="addUser(newuserfirstname, newusername)">Add User</button>
 </form>

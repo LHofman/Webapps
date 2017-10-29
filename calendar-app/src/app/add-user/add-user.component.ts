@@ -10,8 +10,8 @@ export class AddUserComponent {
 
   @Output() public newUser = new EventEmitter<User>();
 
-  addUser(newUserName: HTMLInputElement): boolean {
-    const user = new User(newUserName.value);
+  addUser(newUserFirstName: HTMLInputElement, newUserName: HTMLInputElement): boolean {
+    const user = new User(7, newUserFirstName.value, newUserName.value);
     this.newUser.emit(user);
     return false;
   }

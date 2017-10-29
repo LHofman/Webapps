@@ -33,20 +33,23 @@ export class TaskComponent implements OnInit {
   }
 
   get startTime(): string {
-    return this.getTime(this._task.startTime);
+    return this.getTime(this.startDate);
   }
 
   get endTime(): string {
-    return this.getTime(this._task.endTime);
+    return this.getTime(this.endDate);
   }
 
   private getTime(time: Date): string {
-    let out = '';
-    if (this._task.startTime.toDateString() !== this._task.endTime.toDateString()) {
-      out = time.toDateString();
-    }
-    out += time.toLocaleTimeString();
-    return out;
+    return time.toDateString() + ' ' + time.toLocaleTimeString();
+  }
+
+  get startDate(): Date {
+    return this._task.startTime;
+  }
+
+  get endDate(): Date {
+    return this._task.endTime;
   }
 
   get location(): string {

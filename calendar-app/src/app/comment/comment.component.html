@@ -1,7 +1,11 @@
 <accordion [showArrows]="true" [closeOthers]="false" [expandAll]="false">
 
   
-  <accordion-group heading="{{title}}">
+  <accordion-group>
+
+    <accordion-heading>
+      {{title}} ({{author.firstname}} {{author.name}} <a [routerLink]="['/user', author.id]"><span class="glyphicon glyphicon-new-window"></span></a>)
+    </accordion-heading>
     
     <p id="commentBody">{{body}}</p>
     <br><br>

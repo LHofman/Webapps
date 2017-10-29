@@ -13,10 +13,12 @@ import { CommentComponent } from './comment/comment.component';
 import { AddCommentComponent } from './add-comment/add-comment.component';
 import { DayComponent } from './day/day.component';
 import { TaskPageComponent } from './task-page/task-page.component';
+import { UserPageComponent } from './user-page/user-page.component';
 
 const appRoutes = [
   {path: 'day/:year/:month/:day', component: DayComponent},
-  {path: 'task/:taskId', component: TaskPageComponent}
+  {path: 'task/:taskId', component: TaskPageComponent},
+  {path: 'user/:userId', component: UserPageComponent}
 ];
 
 @NgModule({
@@ -30,7 +32,8 @@ const appRoutes = [
     CommentComponent,
     AddCommentComponent,
     DayComponent,
-    TaskPageComponent
+    TaskPageComponent,
+    UserPageComponent
   ],
   imports: [
     BrowserModule,
