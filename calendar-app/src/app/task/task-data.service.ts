@@ -1,6 +1,6 @@
-import { Comment } from '../models/comment/comment.model';
-import { User } from '../models/user/user.model';
-import { Task } from '../models/task/task.model';
+import { Comment } from '../comment/comment.model';
+import { User } from '../user/user.model';
+import { Task } from './task.model';
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
@@ -26,13 +26,6 @@ export class TaskDataService {
     return this.http.post(this._appUrl, task).map(res =>
       res.json()).map(item =>
         new Task(item._id, item.title, new Date(item.startTime), new Date(item.endTime), item.location));
-  }
-
-  addUserToTask(user: User, task: Task): Observable<User> {
-    const theUrl = '${this._appUrl}/task/${task.id}/users';
-    return this.http.post(theUrl, user).map(res =>
-      res.json()).map(item =>
-      User.fromJSON(item));
   }
 
   findTask(taskId: number): Task {

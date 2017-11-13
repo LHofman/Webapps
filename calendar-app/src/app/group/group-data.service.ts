@@ -1,4 +1,4 @@
-import { Group } from '../models/group/group.model';
+import { Group } from './group.model';
 import { Injectable } from '@angular/core';
 
 @Injectable()

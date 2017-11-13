@@ -1,12 +1,12 @@
-import { User } from './models/user/user.model';
+import { User } from './user/user.model';
 import { Observable } from 'rxjs/Rx';
-import { Comment } from './models/comment/comment.model';
-import { CommentDataService } from './services/comment-data.service';
-import { GroupDataService } from './services/group-data.service';
-import { TaskDataService } from './services/task-data.service';
-import { UserDataService } from './services/user-data.service';
+import { Comment } from './comment/comment.model';
+import { CommentDataService } from './comment/comment-data.service';
+import { GroupDataService } from './group/group-data.service';
+import { TaskDataService } from './task/task-data.service';
+import { UserDataService } from './user/user-data.service';
 import { Component, OnInit } from '@angular/core';
-import {Task} from './models/task/task.model';
+import {Task} from './task/task.model';
 
 @Component({
   selector: 'app-root',
@@ -31,9 +31,7 @@ export class AppComponent implements OnInit {
   }
 
   newTaskAdded(task) {
-    console.log(task);
     this.taskData.addNewTask(task).subscribe(item => {
-      console.log(task);
       const user = task.users.map(usr =>
         this.userData.addUserToTask(usr, item));
 

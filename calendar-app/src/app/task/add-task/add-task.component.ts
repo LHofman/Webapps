@@ -1,6 +1,6 @@
-import { User } from '../../models/user/user.model';
+import { User } from '../../user/user.model';
 import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
-import { Task } from '../../models/task/task.model';
+import { Task } from '../../task/task.model';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({

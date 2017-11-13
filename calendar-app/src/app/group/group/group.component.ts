@@ -1,5 +1,5 @@
-import { User } from '../user/user.model';
-import { Group } from './group.model';
+import { User } from '../../user/user.model';
+import { Group } from '../group.model';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({

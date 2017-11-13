@@ -1,10 +1,10 @@
-import { CommentDataService } from '../../services/comment-data.service';
-import { UserDataService } from '../../services/user-data.service';
-import { Comment } from '../../models/comment/comment.model';
-import { User } from '../../models/user/user.model';
-import { TaskDataService } from '../../services/task-data.service';
+import { CommentDataService } from '../../comment/comment-data.service';
+import { UserDataService } from '../../user/user-data.service';
+import { Comment } from '../../comment/comment.model';
+import { User } from '../../user/user.model';
+import { TaskDataService } from '../../task/task-data.service';
 import { ActivatedRoute } from '@angular/router';
-import { Task } from '../../models/task/task.model';
+import { Task } from '../../task/task.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

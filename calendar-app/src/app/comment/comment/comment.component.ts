@@ -1,6 +1,6 @@
-import { CommentDataService } from '../../services/comment-data.service';
-import { User } from '../user/user.model';
-import { Comment } from './comment.model';
+import { CommentDataService } from '../comment-data.service';
+import { User } from '../../user/user.model';
+import { Comment } from '../comment.model';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({

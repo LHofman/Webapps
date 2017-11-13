@@ -1,15 +1,8 @@
-<!--
-<ul>
-  <li><a routerLink="/day/2017/9/16">Home</a></li>
-</ul>
+<div class="ui container">
+  <div class="ui two item menu">
+    <a class="item" routerLinkActive="active"
+      routerLink="/day/2017/10/13">13 November 2017</a>
+  </div>
+</div>
 
 <router-outlet></router-outlet>
--->
-
-<ul>
-  <li *ngFor="let task of tasks">
-    <app-task [_task]="task"></app-task>
-  </li>
-</ul>
-
-<app-add-task (newTask)="newTaskAdded($event)"></app-add-task>

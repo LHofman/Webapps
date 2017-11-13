@@ -1,8 +1,8 @@
-import { UserDataService } from '../../services/user-data.service';
-import { TaskDataService } from '../../services/task-data.service';
+import { UserDataService } from '../../user/user-data.service';
+import { TaskDataService } from '../../task/task-data.service';
 import { ActivatedRoute } from '@angular/router';
-import { Task } from '../../models/task/task.model';
-import { User } from '../../models/user/user.model';
+import { Task } from '../../task/task.model';
+import { User } from '../../user/user.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

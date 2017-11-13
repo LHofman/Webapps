@@ -1,5 +1,5 @@
-import { Task } from '../../models/task/task.model';
-import { TaskDataService } from '../../services/task-data.service';
+import { Task } from '../../task/task.model';
+import { TaskDataService } from '../../task/task-data.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnChanges, OnInit } from '@angular/core';
 
@@ -19,7 +19,8 @@ export class DayComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.day = new Date(params.year, params.month, params.day);
-      this._tasks = this.taskData.findTasksOnDate(this.day);
+      this._tasks = new Array<Task>();
+      this._tasks.push(...this.taskData.findTasksOnDate(this.day));
     });
   }
 

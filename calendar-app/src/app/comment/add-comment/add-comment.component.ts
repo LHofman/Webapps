@@ -1,6 +1,6 @@
-import { User } from '../../models/user/user.model';
+import { User } from '../../user/user.model';
 import { Component, Output, EventEmitter } from '@angular/core';
-import {Comment} from '../../models/comment/comment.model';
+import {Comment} from '../../comment/comment.model';
 
 @Component({
   selector: 'app-add-comment',

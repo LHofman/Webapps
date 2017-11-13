@@ -1,10 +1,10 @@
-import { CommentDataService } from '../../services/comment-data.service';
-import { Comment } from '../comment/comment.model';
-import { Group } from '../group/group.model';
-import { UserDataService } from '../../services/user-data.service';
+import { CommentDataService } from '../../comment/comment-data.service';
+import { Comment } from '../../comment/comment.model';
+import { Group } from '../../group/group.model';
+import { UserDataService } from '../../user/user-data.service';
 import { Component, OnInit, Input } from '@angular/core';
-import {Task} from './task.model';
-import {User} from '../user/user.model';
+import {Task} from '../task.model';
+import {User} from '../../user/user.model';
 
 @Component({
   selector: 'app-task',

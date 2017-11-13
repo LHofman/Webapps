@@ -1,4 +1,4 @@
-import { Comment } from '../models/comment/comment.model';
+import { Comment } from './comment.model';
 import { Injectable } from '@angular/core';
 
 @Injectable()
