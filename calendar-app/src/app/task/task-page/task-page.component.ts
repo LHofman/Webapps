@@ -22,8 +22,8 @@ export class TaskPageComponent implements OnInit {
     private commentData: CommentDataService) { }
 
   ngOnInit() {
-    const params = this.route.snapshot.params;
-    this._task = this.taskData.findTask(params.taskId);
+    this.route.data.subscribe(item =>
+      this._task = item['task']);
   }
 
   get title(): string {

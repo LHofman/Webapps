@@ -11,6 +11,10 @@ const redirect = 'day/' + today.getFullYear()
   + '/' + today.getDate();
 
 const appRoutes: Routes = [
+    {
+        path: 'task',
+        loadChildren: '../task/task.module#TaskModule'
+    },
     {path: '', redirectTo: redirect, pathMatch: 'full'},
     {path: 'day/:year/:month/:day', component: DayComponent},
     {path: 'user/:userId', component: UserPageComponent},

@@ -9,29 +9,27 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class TaskDataService {
 
-  private _appUrl = 'http://localhost:4200/API/tasks/';
+  private _appUrl = 'http://localhost:4200/API/';
 
   constructor(private http: Http) {}
 
   get tasks(): Observable<Task[]> {
-    return this.http.get(this._appUrl).map(response =>
+    return this.http.get(this._appUrl + 'tasks/').map(response =>
       response.json().map(item =>
-        new Task(item._id, item.title, new Date(item.startTime), new Date(item.endTime), item.location)
-      )
-    );
+        Task.fromJSON(item)));
   }
 
   addNewTask(task): Observable<Task> {
     console.log(task);
-    return this.http.post(this._appUrl, task).map(res =>
+    return this.http.post(this._appUrl + 'tasks/', task).map(res =>
       res.json()).map(item =>
-        new Task(item._id, item.title, new Date(item.startTime), new Date(item.endTime), item.location));
+        Task.fromJSON(item));
   }
 
-  findTask(taskId: number): Task {
-    // tslint:disable-next-line:triple-equals
-    // return this._tasks.find(task => task.id == taskId);
-    return undefined;
+  getTask(id): Observable<Task> {
+    return this.http.get(this._appUrl + 'task/' + id).map(response =>
+      response.json().map(item =>
+        Task.fromJSON(item)));
   }
 
   findTasksOnDate(date): Task[] {
