@@ -1,5 +1,5 @@
-import { Task } from '../../task/task.model';
-import { TaskDataService } from '../../task/task-data.service';
+import { Task } from '../../task/task/task.model';
+import { TaskDataService } from '../../task/task/task-data.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnChanges, OnInit } from '@angular/core';
 
@@ -11,7 +11,7 @@ import { Component, OnChanges, OnInit } from '@angular/core';
 export class DayComponent implements OnInit {
 
   private day: Date;
-  private _tasks = new Array<Task>();
+  private _tasks: Task[];
 
   constructor(private route: ActivatedRoute,
     private taskData: TaskDataService) { }
@@ -20,7 +20,8 @@ export class DayComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.day = new Date(params.year, params.month, params.day);
       this._tasks = new Array<Task>();
-      this._tasks.push(...this.taskData.findTasksOnDate(this.day));
+      this.taskData.findTasksOnDate(this.day).subscribe(items =>
+        this._tasks = items);
     });
   }
 

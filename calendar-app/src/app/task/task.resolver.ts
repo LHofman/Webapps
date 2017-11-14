@@ -1,6 +1,6 @@
-import { TaskDataService } from './task-data.service';
+import { TaskDataService } from './task/task-data.service';
 import { Observable } from 'rxjs/Rx';
-import { Task } from './task.model';
+import { Task } from './task/task.model';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Injectable } from '@angular/core';
 

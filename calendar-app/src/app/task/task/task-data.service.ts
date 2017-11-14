@@ -32,18 +32,10 @@ export class TaskDataService {
         Task.fromJSON(item)));
   }
 
-  findTasksOnDate(date): Task[] {
-    // return this._tasks.filter(task => {
-    //   const _startTime = task.startTime;
-    //   const _endTime = task.endTime;
-    //   return date.getFullYear() >= _startTime.getFullYear()
-    //     && date.getFullYear() <= _endTime.getFullYear()
-    //     && date.getMonth() >= _startTime.getMonth()
-    //     && date.getMonth() <= _endTime.getMonth()
-    //     && date.getDate() >= _startTime.getDate()
-    //     && date.getDate() <= _endTime.getDate();
-    // }).sort((a, b) => (a.startTime <= b.startTime) ? -1 : 1);
-    return undefined;
+  findTasksOnDate(date): Observable<Task[]> {
+    return this.http.get(this._appUrl + 'tasks/' + date).map(response =>
+      response.json().map(item =>
+        Task.fromJSON(item)));
   }
 
   findTasksOfUser(user): Task[] {

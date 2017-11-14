@@ -1,12 +1,12 @@
-import { User } from './user/user.model';
+import { User } from './task/user/user.model';
 import { Observable } from 'rxjs/Rx';
-import { Comment } from './comment/comment.model';
-import { CommentDataService } from './comment/comment-data.service';
-import { GroupDataService } from './group/group-data.service';
-import { TaskDataService } from './task/task-data.service';
-import { UserDataService } from './user/user-data.service';
+import { Comment } from './task/comment/comment.model';
+import { CommentDataService } from './task/comment/comment-data.service';
+import { GroupDataService } from './task/group/group-data.service';
+import { TaskDataService } from './task/task/task-data.service';
+import { UserDataService } from './task/user/user-data.service';
 import { Component, OnInit } from '@angular/core';
-import {Task} from './task/task.model';
+import {Task} from './task/task/task.model';
 
 @Component({
   selector: 'app-root',

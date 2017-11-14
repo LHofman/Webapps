@@ -42,8 +42,6 @@ router.get('/API/task/:id', (req, res, next) => {
   });
 });
 router.delete('/API/task/:id', (req, res, next) => {
-  console.log('deleting');
-  console.log(req.params.id);
   Task.findById(req.params.id, (err, task) => {
     if (err) return next(err);
     if (!task) return next(new Error('not found ' + req.params.id));
@@ -58,9 +56,20 @@ router.delete('/API/task/:id', (req, res, next) => {
   //   res.json("removed task");
   // });
 });
+router.get('/API/tasks/:date', (req, res, next) => {
+  let date = new Date(req.params.date);
+  let dateAfter = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
+  console.log(date.toDateString() + '          ' + date.toLocaleTimeString());
+  console.log(dateAfter.toDateString() + '          ' + dateAfter.toLocaleTimeString());
+  let query = Task.find({where: {and: [{'startTime': {lt: dateAfter}}, {'endTime': {gte: date}}]}}).populate('users');
+  query.exec((err, tasks) => {
+    if (err) return next(err);
+    console.log(tasks);
+    res.json(tasks);
+  });
+});
 
 router.post('/API/task/:task/users', (req, res, next) => {
-  console.log('here');
   let usr = new User(req.body);
   usr.save((err, user) => {
     if (err) return next(err);
