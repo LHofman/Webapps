@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
+let jwt = require('express-jwt');
 
+let auth = jwt({secret: process.env.TASK_BACKEND_SECRET,
+  userProperty: 'Payload'});
 let mongoose = require('mongoose');
 let Task = mongoose.model('Task');
 let User = mongoose.model('User');
@@ -8,6 +11,29 @@ let User = mongoose.model('User');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
+});
+
+router.post('/register', (req, res, next) => {
+  if (!req.body.username || !res.body.password) {
+    return res.status(400).json({message: 'Please fill out all fields'});
+  }
+  var user = new User();
+  user.username = req.body.username;
+  user.setPassword(req.body.password);
+  user.save((err) => {
+    if (err) return next(err);
+    return res.json({token: user.generateJWT()});
+  });
+});
+router.post('/login', (req, res, next) => {
+  if (!req.body.username || !res.body.password) {
+    return res.status(400).json({message: 'Please fill out all fields'});
+  }
+  passport.authenticate('local', (err, user, info) => {
+    if (err) return next(err);
+    if (user) return res.json({token: user.generateJWT()});
+    return res.status(401).json(info);
+  })(req, res, next);
 });
 
 router.param('task', (req, res, next, id) => {//TODO does not get called
@@ -26,7 +52,7 @@ router.get('/API/tasks/', (req, res, next) => {
     res.json(tasks);
   });
 });
-router.post('/API/tasks/', (req, res, next) => {
+router.post('/API/tasks/', auth, (req, res, next) => {
   let task = new Task(req.body);
   task.save((err, rec) => {
     if (err) return next(err);
@@ -61,7 +87,9 @@ router.get('/API/tasks/:date', (req, res, next) => {
   let dateAfter = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
   console.log(date.toDateString() + '          ' + date.toLocaleTimeString());
   console.log(dateAfter.toDateString() + '          ' + dateAfter.toLocaleTimeString());
-  let query = Task.find({where: {and: [{'startTime': {lt: dateAfter}}, {'endTime': {gte: date}}]}}).populate('users');
+  let query = Task.find({
+    where: {and: [{'startTime': {lt: dateAfter}}, {'endTime': {gte: date}}]}
+  }).populate('users');
   query.exec((err, tasks) => {
     if (err) return next(err);
     console.log(tasks);
