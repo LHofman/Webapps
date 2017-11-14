@@ -87,9 +87,7 @@ router.get('/API/tasks/:date', (req, res, next) => {
   let dateAfter = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
   console.log(date.toDateString() + '          ' + date.toLocaleTimeString());
   console.log(dateAfter.toDateString() + '          ' + dateAfter.toLocaleTimeString());
-  let query = Task.find({
-    where: {and: [{'startTime': {lt: dateAfter}}, {'endTime': {gte: date}}]}
-  }).populate('users');
+  let query = Task.find({$and: [{startTime: {$lt: dateAfter}}, {endTime: {$gte: date}}]}).populate('users');
   query.exec((err, tasks) => {
     if (err) return next(err);
     console.log(tasks);
