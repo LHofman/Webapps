@@ -42,4 +42,4 @@ testem.log
 Thumbs.db
 
 # config
-/src/app/.env
+.env

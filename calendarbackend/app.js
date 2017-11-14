@@ -6,6 +6,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 let passport = require('passport');
 
+let dotenv = require('dotenv');
+dotenv.load();
+
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/calendardb', {
   useMongoClient: true

@@ -13,7 +13,7 @@ export class Task {
     public comments = new Array<Comment>();
 
     static fromJSON(item) {
-        return new Task(item._id, item.title, item.startTime, item.endTime, item.location);
+        return new Task(item._id, item.title, new Date(item.startTime), new Date(item.endTime), item.location);
     }
 
     constructor(id: number, title: string, startTime: Date, endTime: Date, location: string) {

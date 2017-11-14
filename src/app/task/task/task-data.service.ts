@@ -20,7 +20,6 @@ export class TaskDataService {
   }
 
   addNewTask(task): Observable<Task> {
-    console.log(task);
     return this.http.post(this._appUrl + 'tasks/', task).map(res =>
       res.json()).map(item =>
         Task.fromJSON(item));
@@ -36,6 +35,11 @@ export class TaskDataService {
     return this.http.get(this._appUrl + 'tasks/' + date).map(response =>
       response.json().map(item =>
         Task.fromJSON(item)));
+  }
+
+  removeTask(id): Observable<String> {
+    return this.http.delete(this._appUrl + 'task/' + id).map(response =>
+      response.json());
   }
 
   findTasksOfUser(user): Task[] {

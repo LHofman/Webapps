@@ -9,10 +9,6 @@ import { AppComponent } from './app.component';
 import { DayComponent } from './pages/day/day.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
-import dotenv from 'dotenv';
-
-dotenv.config();
-
 @NgModule({
   declarations: [
     AppComponent,

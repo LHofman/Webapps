@@ -1,7 +1,10 @@
+import { Observable } from 'rxjs/Rx';
+import { UserDataService } from '../../task/user/user-data.service';
 import { Task } from '../../task/task/task.model';
 import { TaskDataService } from '../../task/task/task-data.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnChanges, OnInit } from '@angular/core';
+import { User } from '../../task/user/user.model';
 
 @Component({
   selector: 'app-day',
@@ -14,7 +17,8 @@ export class DayComponent implements OnInit {
   private _tasks: Task[];
 
   constructor(private route: ActivatedRoute,
-    private taskData: TaskDataService) { }
+    private taskData: TaskDataService,
+    private userData: UserDataService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -22,6 +26,32 @@ export class DayComponent implements OnInit {
       this._tasks = new Array<Task>();
       this.taskData.findTasksOnDate(this.day).subscribe(items =>
         this._tasks = items);
+    });
+  }
+
+  removeTask(task: Task) {
+    this.taskData.removeTask(task.id).subscribe(
+      result => {
+        this._tasks.splice(this._tasks.indexOf(task), 1);
+      },
+      error => console.log(error)
+    );
+  }
+
+  newTaskAdded(task: Task) {
+    this.taskData.addNewTask(task).subscribe(item => {
+      this._tasks.push(item);
+      // const user = task.users.map(usr =>
+      //   this.userData.addUserToTask(usr, item));
+
+      // Observable.forkJoin(...user).subscribe(
+      //   (users: User[]) => {
+      //     for (const usr of users) {
+      //       item.users.push(usr);
+      //     }
+      //     return this._tasks.push(item);
+      //   }
+      // );
     });
   }
 
