@@ -8,7 +8,6 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { DayComponent } from './pages/day/day.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -22,9 +21,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     TaskModule,
     AppRoutingModule
   ],
-  providers: [
-    {provide: LocationStrategy, useClass: HashLocationStrategy}
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
