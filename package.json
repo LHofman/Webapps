@@ -12,7 +12,7 @@
   },
   "engines": {
     "node": "8.6.0",
-    "@angular/cli": "5.5.1"
+    "npm": "5.5.1"
   },
   "private": true,
   "dependencies": {
