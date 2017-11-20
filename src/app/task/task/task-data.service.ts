@@ -31,8 +31,8 @@ export class TaskDataService {
         Task.fromJSON(item)));
   }
 
-  findTasksOnDate(date): Observable<Task[]> {
-    return this.http.get(this._appUrl + 'tasks/' + date).map(response =>
+  findTasksOnDate(date1: Date, date2?: Date): Observable<Task[]> {
+    return this.http.get(this._appUrl + 'tasks/' + date1 + (date2 ? ('/' + date2) : '')).map(response =>
       response.json().map(item =>
         Task.fromJSON(item)));
   }

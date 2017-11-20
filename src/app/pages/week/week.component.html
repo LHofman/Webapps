@@ -1,0 +1,24 @@
+<div class="container">
+  <h2>
+    <a [routerLink]="['/week', prevYear, prevMonth, prevDay]">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    {{week}}
+    <a [routerLink]="['/week', nextYear, nextMonth, nextDay]">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+  </h2>
+  <br>
+
+  <div class="row">
+    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-6" *ngFor="let day of days; let i = index" [attr.data-index]="i">
+      <p>{{day.getFullYear()}}/{{day.getMonth()}}/{{day.getDate()}}</p>
+      <ul>
+        <li *ngFor="let task of getTasks(i) | async">
+          {{task.title}}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>

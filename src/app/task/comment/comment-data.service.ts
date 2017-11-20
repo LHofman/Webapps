@@ -1,29 +1,29 @@
 import { Comment } from './comment.model';
 import { Injectable } from '@angular/core';
+import { Task } from '../task/task.model';
+import { Http } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class CommentDataService {
 
   private _comments = new Array<Comment>();
 
-    constructor() {}
+  private _appUrl = 'http://localhost:4200/API/';
 
-    get comments(): Comment[] {
-      return this._comments;
-    }
+  constructor(private http: Http) { }
 
-    addComments(...comments) {
-      for (const comment of comments) {
-        this._comments.push(comment);
-      }
-    }
+  commentsFromTask(task: Task): Observable<Comment[]> {
+    const theUrl = this._appUrl + 'task/' + task.id + '/comments';
+    return this.http.get(theUrl).map(response =>
+      response.json().map(item =>
+        Comment.fromJSON(item)));
+  }
 
-    findcomment(title): Comment {
-      return this._comments.find(comment => comment.title === title);
-    }
-
-    findcomments(...titles): Comment[] {
-      return this._comments.filter(comment => titles.indexOf(comment.title) > -1);
-    }
-
+  addCommentToTask(comment: Comment, task: Task): Observable<Comment> {
+    const theUrl = this._appUrl + 'task/' + task.id + '/comments';
+    return this.http.post(theUrl, comment).map(res =>
+      res.json()).map(item =>
+        Comment.fromJSON(item));
+  }
 }

@@ -12,8 +12,10 @@ export class Task {
     public groups = new Array<Group>();
     public comments = new Array<Comment>();
 
-    static fromJSON(item) {
-        return new Task(item._id, item.title, new Date(item.startTime), new Date(item.endTime), item.location);
+    static fromJSON(item): Task {
+        const task = new Task(item._id, item.title, new Date(item.startTime), new Date(item.endTime), item.location);
+        task.comments = item.comments;
+        return task;
     }
 
     constructor(id: number, title: string, startTime: Date, endTime: Date, location: string) {

@@ -54,14 +54,10 @@ export class TaskPageComponent implements OnInit {
     return this._task.comments;
   }
 
-  newUserAdded(user) {
-    this.userData.addNewUser(user);
-    this._task.users.push(user);
-  }
-
-  newCommentAdded(comment) {
-    this.commentData.addComments(comment);
-    this._task.comments.push(comment);
+  newCommentAdded(comment: Comment) {
+    this.commentData.addCommentToTask(comment, this._task).subscribe(item => {
+      this._task.comments.push(item);
+    });
   }
 
 }

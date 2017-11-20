@@ -34,9 +34,10 @@ export class CommentComponent implements OnInit {
     return this._comment.comments;
   }
 
-  newCommentAdded(comment) {
-    this._commentDataService.addComments(comment);
-    this._comment.addComments(comment);
+  newCommentAdded(comment: Comment) {
+    // this._commentDataService.addCommentToTask(comment).subscribe(item => {
+    //   this._comment.comments.push(item);
+    // });
   }
 
 }

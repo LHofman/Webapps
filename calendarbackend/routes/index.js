@@ -6,6 +6,7 @@ let auth = jwt({secret: process.env, userProperty: 'Payload'});
 let mongoose = require('mongoose');
 let Task = mongoose.model('Task');
 let User = mongoose.model('User');
+let Comment = mongoose.model('Comment');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -45,17 +46,33 @@ router.param('task', (req, res, next, id) => {//TODO does not get called
   });
 });
 router.get('/API/tasks/', (req, res, next) => {
-  let query = Task.find().populate('users');
+  let query = Task.find().populate('comments');
   query.exec((err, tasks) => {
     if (err) return next(err);
     res.json(tasks);
   });
 });
 router.post('/API/tasks/', (req, res, next) => {
-  let task = new Task(req.body);
+  let task = new Task({title: req.body.title, startTime: req.body.startTime, endTime: req.body.endTime, location: req.body.location});
   task.save((err, rec) => {
     if (err) return next(err);
     res.json(rec);
+  });
+});
+router.post('/API/task/:id/comments', (req, res, next) => {
+  let cmt = new Comment(req.body);
+  console.log(cmt);
+  cmt.save((err, comment) => {
+    console.log(err);
+    if (err) return next(err);
+    Task.findById(req.params.id, (err, task) => {
+      if (err) return next(err);
+      task.comments.push(comment);
+      task.save((err, rec) => {
+        if (err) return next(err);
+        res.json(comment);
+      });
+    });
   });
 });
 router.get('/API/task/:id', (req, res, next) => {
@@ -67,12 +84,15 @@ router.get('/API/task/:id', (req, res, next) => {
   });
 });
 router.delete('/API/task/:id', (req, res, next) => {
-  Task.findById(req.params.id, (err, task) => {
+  Comment.remove({_id: {$in: req.task.comments}}, (err) => {
     if (err) return next(err);
-    if (!task) return next(new Error('not found ' + req.params.id));
-    task.remove((err) => {
+    Task.findById(req.params.id, (err, task) => {
       if (err) return next(err);
-      res.json("removed task");
+      if (!task) return next(new Error('not found ' + req.params.id));
+      task.remove((err) => {
+        if (err) return next(err);
+        res.json("removed task");
+      });
     });
   });
   // req.task.remove((err) => {
@@ -82,12 +102,70 @@ router.delete('/API/task/:id', (req, res, next) => {
 });
 router.get('/API/tasks/:date', (req, res, next) => {
   let date = new Date(req.params.date);
+  console.log(date);
   let dateAfter = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
-  let query = Task.find({$and: [{startTime: {$lt: dateAfter}}, {endTime: {$gte: date}}]}).populate('users');
+  console.log(dateAfter);
+  let query = Task.find({$and: [{startTime: {$lt: dateAfter}}, {endTime: {$gte: date}}]}).populate('comments');
   query.exec((err, tasks) => {
     if (err) return next(err);
     res.json(tasks);
   });
+});
+router.get('/API/tasks/:date/:date2', (req, res, next) => {
+  let date = new Date(req.params.date);
+  let dateAfter = new Date(req.params.date2);
+  dateAfter.setDate(dateAfter.getDate() + 1);
+  let query = Task.find({$and: [{startTime: {$lt: dateAfter}}, {endTime: {$gte: date}}]}).populate('comments');
+  query.exec((err, tasks) => {
+    if (err) return next(err);
+    res.json(tasks);
+  });
+});
+
+router.param('user', (req, res, next, id) => {//TODO does not get called
+  let query = User.findById(id);
+  query.exec((err, user) => {
+    if (err) return next(err);
+    if (!user) return next(new Error('not found ' + id));
+    req.user = user;
+    return next();
+  });
+});
+router.get('/API/users/', (req, res, next) => {
+  let query = User.find();
+  query.exec((err, users) => {
+    if (err) return next(err);
+    res.json(users);
+  });
+});
+router.post('/API/users/', (req, res, next) => {
+  let user = new User(req.body);
+  user.save((err, rec) => {
+    if (err) return next(err);
+    res.json(rec);
+  });
+});
+router.get('/API/user/:id', (req, res, next) => {
+  //res.json(req.user);
+  User.findById(req.params.id, (err, user) => {
+    if (err) return next(err);
+    if (!user) return next(new Error('not found ' + req.params.id));
+    res.json(user);
+  });
+});
+router.delete('/API/user/:id', (req, res, next) => {
+  User.findById(req.params.id, (err, user) => {
+    if (err) return next(err);
+    if (!user) return next(new Error('not found ' + req.params.id));
+    user.remove((err) => {
+      if (err) return next(err);
+      res.json("removed user");
+    });
+  });
+  // req.user.remove((err) => {
+  //   if (err) return next(err);
+  //   res.json("removed user");
+  // });
 });
 
 router.post('/API/task/:task/users', (req, res, next) => {

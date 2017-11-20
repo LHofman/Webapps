@@ -66,14 +66,10 @@ export class TaskComponent implements OnInit {
 
   //#endregion getters
 
-  newUserAdded(user) {
-    this._userDataService.addNewUser(user);
-    this._task.users.push(user);
-  }
-
-  newCommentAdded(comment) {
-    this._commentDataService.addComments(comment);
-    this._task.comments.push(comment);
+  newCommentAdded(comment: Comment) {
+    this._commentDataService.addCommentToTask(comment, this._task).subscribe(item => {
+      this._task.comments.push(item);
+    });
   }
 
 }

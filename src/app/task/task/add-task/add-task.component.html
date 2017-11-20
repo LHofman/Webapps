@@ -17,7 +17,7 @@
     <label for="location">Location: </label>
     <input formControlName="location">
   </div>
-  <div formArrayName="users" *ngFor="let user of task.get('users').controls; let i = index">
+  <!-- <div formArrayName="users" *ngFor="let user of task.get('users').controls; let i = index">
     <div [formGroupName]="i">
       <div>
         <label for="user_name">Name:</label>
@@ -28,6 +28,6 @@
         <input formControlName="firstname">
       </div>
     </div>
-  </div>
+  </div> -->
   <button type="submit">Add Task</button>
 </form>

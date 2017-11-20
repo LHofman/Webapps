@@ -1,12 +1,13 @@
-<form>
+<form [formGroup]="comment" (ngSubmit)="onSubmit()">
   <h3>Add a Comment</h3>
-  <div>
+  <div class="noOverflow">
     <label for="title">Title: </label>
-    <input name="title" #newcommenttitle>
+    <input formControlName="title">
+    <div *ngIf="comment.get('title').errors?.required && comment.get('title').touched" class="error">This is required</div>
   </div>
   <div>
     <label for="body">Body: </label>
-    <input name="body" #newcommentbody>
+    <input formControlName="body">
   </div>
-  <button (click)="addComment(newcommenttitle, newcommentbody)">Add Comment</button>
+  <button type="submit">Add Task</button>
 </form>

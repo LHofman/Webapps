@@ -8,17 +8,11 @@
       <app-user [_user]="user"></app-user>
     </li>
   </ul>
+  <app-add-user (newUser)="newUserAdded($event)"></app-add-user>
   <br><br>
   <strong>Comments:</strong>
-  <ul class="noBullet">
-    <li *ngFor="let comment of comments">
-      <app-comment [_comment]="comment"></app-comment>
-    </li>
-  </ul>
-
-  <app-add-user (newUser)="newUserAdded($event)"></app-add-user>
+  <app-comment *ngFor="let comment of comments" [_comment]="comment"></app-comment>
   <app-add-comment (newComment)="newCommentAdded($event)"></app-add-comment>
-
 </div>
 
 <ng-template #notFound>

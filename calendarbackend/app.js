@@ -15,6 +15,7 @@ mongoose.connect('mongodb://localhost/calendardb', {
 });
 require('./models/Task');
 require('./models/User');
+require('./models/Comment');
 
 require('./config/passport');
 
