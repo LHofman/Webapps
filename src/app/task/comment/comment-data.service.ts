@@ -9,7 +9,7 @@ export class CommentDataService {
 
   private _comments = new Array<Comment>();
 
-  private _appUrl = 'http://localhost:4200/API/';
+  private _appUrl = '/API/';
 
   constructor(private http: Http) { }
 

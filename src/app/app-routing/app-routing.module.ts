@@ -7,18 +7,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { WeekComponent } from '../pages/week/week.component';
 
 const today = new Date(Date.now());
-const redirect = 'day/' + today.getFullYear()
-  + '/' + (today.getMonth() + 1)
-  + '/' + today.getDate();
+//const redirect = `day/${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
 
 const appRoutes: Routes = [
-    // {
-    //     path: 'task',
-    //     loadChildren: '../task/task.module#TaskModule'
-    // },
-    {path: '', redirectTo: redirect, pathMatch: 'full'},
     {path: 'day/:year/:month/:day', component: DayComponent},
     {path: 'week/:year/:month/:day', component: WeekComponent},
+    {path: '', redirectTo: `day/${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`, pathMatch: 'full'},
     {path: '**', component: PageNotFoundComponent}];
 
 @NgModule({

@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class UserDataService {
 
-  private _appUrl = 'http://localhost:4200/API/';
+  private _appUrl = '/API/';
 
   constructor(private http: Http) {}
 

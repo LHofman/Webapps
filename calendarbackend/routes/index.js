@@ -8,10 +8,6 @@ let Task = mongoose.model('Task');
 let User = mongoose.model('User');
 let Comment = mongoose.model('Comment');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
 
 router.post('/register', (req, res, next) => {
   if (!req.body.username || !res.body.password) {
