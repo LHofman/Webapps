@@ -12,7 +12,7 @@ import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 export class AddCommentComponent implements OnInit {
 
   @Output() public newComment = new EventEmitter<Comment>();
-  private comment: FormGroup;
+  public comment: FormGroup;
 
   constructor(private fb: FormBuilder) {}
 
