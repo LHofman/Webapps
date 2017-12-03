@@ -22,10 +22,11 @@ export class DayComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.day = new Date(params.year, params.month, params.day);
+      this.day = new Date(params.year, params.month - 1, params.day);
       this._tasks = new Array<Task>();
       this.taskData.findTasksOnDate(this.day).subscribe(items =>
         this._tasks = items);
+      console.log(this._tasks);
     });
   }
 
