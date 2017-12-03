@@ -32,10 +32,12 @@ export class TaskDataService {
   }
 
   findTasksOnDate(date1: Date, date2?: Date): Observable<Task[]> {
-    console.log(date1.toDateString());
     return this.http.get(this._appUrl + 'tasks/' + date1 + (date2 ? ('/' + date2) : '')).map(response =>
-      response.json().map(item =>
-        Task.fromJSON(item)));
+      response.json().map(item => {
+        console.log(item);
+        return Task.fromJSON(item);
+      }
+        ));
   }
 
   removeTask(id): Observable<String> {
