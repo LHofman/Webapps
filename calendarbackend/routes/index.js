@@ -98,11 +98,12 @@ router.delete('/API/task/:id', (req, res, next) => {
 });
 router.get('/API/tasks/:date', (req, res, next) => {
   let date = new Date(req.params.date);
+  let dateBefore = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
   for (let i = 1; i<= 5; i++) console.log(req.params.date);
   for (let i = 1; i<= 5; i++) console.log(date);
-  let dateAfter = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
+  let dateAfter = new Date(dateBefore.getFullYear(), dateBefore.getMonth(), dateBefore.getDate() + 1);
   for (let i = 1; i<= 5; i++) console.log(dateAfter);
-  let query = Task.find({$and: [{startTime: {$lt: dateAfter}}, {endTime: {$gte: date}}]}).populate('comments');
+  let query = Task.find({$and: [{startTime: {$lt: dateAfter}}, {endTime: {$gte: dateBefore}}]}).populate('comments');
   query.exec((err, tasks) => {
     if (err) return next(err);
     res.json(tasks);
