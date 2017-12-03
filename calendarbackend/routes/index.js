@@ -98,6 +98,7 @@ router.delete('/API/task/:id', (req, res, next) => {
 });
 router.get('/API/tasks/:date', (req, res, next) => {
   let date = new Date(req.params.date);
+  date.setHours(0, 0, 0);
   for (let i = 1; i<= 100; i++) console.log(date);
   let dateAfter = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
   console.log(dateAfter);
