@@ -26,6 +26,7 @@ export class DayComponent implements OnInit {
       this._tasks = new Array<Task>();
       this.taskData.findTasksOnDate(this.day).subscribe(items =>
         this._tasks = items);
+      console.log(this.day);
       console.log(this._tasks);
     });
   }
