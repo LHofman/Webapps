@@ -99,12 +99,15 @@ router.delete('/API/task/:id', (req, res, next) => {
 router.get('/API/tasks/:date', (req, res, next) => {
   let date = new Date(req.params.date);
   let dateBefore = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  for (let i = 1; i<= 5; i++) console.log(req.params.date);
-  for (let i = 1; i<= 5; i++) console.log(dateBefore.toDateString());
-  for (let i = 1; i<= 5; i++) console.log(dateBefore.toLocaleTimeString());
   let dateAfter = new Date(dateBefore.getFullYear(), dateBefore.getMonth(), dateBefore.getDate() + 1);
-  for (let i = 1; i<= 5; i++) console.log(dateAfter.toDateString());
-  for (let i = 1; i<= 5; i++) console.log(dateAfter.toLocaleTimeString());
+  console.log('date: ' + req.params.date);
+  console.log('year: ' + date.getFullYear());
+  console.log('month: ' + date.getMonth());
+  console.log('date: ' + date.getDate());
+  console.log('datebefore: ' + dateBefore.toDateString());
+  console.log('datebefore hours: ' + dateBefore.toLocaleTimeString());
+  console.log('dateafter: ' + dateAfter.toDateString());
+  console.log('dateafter hours: ' + dateAfter.toLocaleTimeString());
   let query = Task.find({$and: [{startTime: {$lt: dateAfter}}, {endTime: {$gte: dateBefore}}]}).populate('comments');
   query.exec((err, tasks) => {
     if (err) return next(err);
