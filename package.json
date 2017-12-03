@@ -41,6 +41,7 @@
     "morgan": "~1.9.0",
     "ngx-accordion": "0.0.17",
     "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "rxjs": "^5.4.2",
     "serve-favicon": "~2.4.5",
     "typescript": "~2.3.3",
