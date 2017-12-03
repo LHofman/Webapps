@@ -89,7 +89,7 @@ export class DayComponent implements OnInit {
   }
 
   get prevMonth(): number {
-    return this.previousDay.getMonth();
+    return this.previousDay.getMonth() + 1;
   }
 
   get prevYear(): number {
@@ -101,7 +101,7 @@ export class DayComponent implements OnInit {
   }
 
   get nextMonth(): number {
-    return this.nextDate.getMonth();
+    return this.nextDate.getMonth() + 1;
   }
 
   get nextYear(): number {
