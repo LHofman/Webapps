@@ -98,7 +98,7 @@ router.delete('/API/task/:id', (req, res, next) => {
 });
 router.get('/API/tasks/:date', (req, res, next) => {
   let date = new Date(req.params.date);
-  for (let i = 1; i<= 100; i++) console.log(date);
+  for (let i = 1; i<= 5; i++) console.log(req.params.date);
   let dateAfter = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
   for (let i = 1; i<= 5; i++) console.log(dateAfter);
   let query = Task.find({$and: [{startTime: {$lt: dateAfter}}, {endTime: {$gte: date}}]}).populate('comments');
