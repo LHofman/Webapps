@@ -103,6 +103,7 @@ router.get('/API/tasks/:date', (req, res, next) => {
   console.log('date: ' + req.params.date);
   console.log('year: ' + date.getFullYear());
   console.log('month: ' + date.getMonth());
+  console.log('day: ' + date.getDay());
   console.log('date: ' + date.getDate());
   console.log('datebefore: ' + dateBefore.toDateString());
   console.log('datebefore hours: ' + dateBefore.toLocaleTimeString());
