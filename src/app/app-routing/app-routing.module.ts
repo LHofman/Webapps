@@ -7,7 +7,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { WeekComponent } from '../pages/week/week.component';
 
 const today = new Date(Date.now());
-//const redirect = `day/${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
 
 const appRoutes: Routes = [
     {path: 'day/:year/:month/:day', component: DayComponent},
