@@ -10,13 +10,5 @@
     <p id="commentBody">{{body}}</p>
     <br><br>
 
-    Comments: 
-    <ul>
-      <li *ngFor="let comment of comments">
-        <app-comment [_comment] = "comment"></app-comment>
-      </li>
-    </ul>
-    
-    <app-add-comment (newComment)="newCommentAdded($event)"></app-add-comment>
   </accordion-group>
 </accordion>

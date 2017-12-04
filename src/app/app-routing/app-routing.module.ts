@@ -4,13 +4,11 @@ import { TaskPageComponent } from '../task/task/task-page/task-page.component';
 import { DayComponent } from '../pages/day/day.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { WeekComponent } from '../pages/week/week.component';
 
 const today = new Date(Date.now());
 
 const appRoutes: Routes = [
     {path: 'day/:year/:month/:day', component: DayComponent},
-    {path: 'week/:year/:month/:day', component: WeekComponent},
     {path: '', redirectTo: `day/${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`, pathMatch: 'full'},
     {path: '**', component: PageNotFoundComponent}];
 

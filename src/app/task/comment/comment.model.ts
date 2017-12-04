@@ -5,9 +5,8 @@ export class Comment {
     private _author: User;
     private _title: string;
     private _body: string;
-    private _comments = new Array<Comment>();
 
-    constructor(id: Number, author: User, title: string, body: string, comments?: Comment[]) {
+    constructor(id: Number, author: User, title: string, body: string) {
         this._id = id;
         this._author = author;
         this._title = title;
@@ -15,7 +14,7 @@ export class Comment {
     }
 
     static fromJSON(item) {
-        return new Comment(item._id, item.author, item.title, item.body, item.comments);
+        return new Comment(item._id, item.author, item.title, item.body);
     }
 
     get id(): Number {
@@ -36,16 +35,6 @@ export class Comment {
 
     get body(): string {
         return this._body;
-    }
-
-    get comments(): Comment[] {
-        return this._comments;
-    }
-
-    addComments(...comments) {
-        for (const comment of comments) {
-            this._comments.push(comment);
-        }
     }
 
     toJSON() {

@@ -26,8 +26,6 @@ export class DayComponent implements OnInit {
       this._tasks = new Array<Task>();
       this.taskData.findTasksOnDate(this.day).subscribe(items =>
         this._tasks = items);
-      console.log(this.day);
-      console.log(this._tasks);
     });
   }
 
@@ -75,15 +73,11 @@ export class DayComponent implements OnInit {
   }
 
   private get previousDay(): Date {
-    const prev = new Date();
-    prev.setDate(this.day.getDate() - 1);
-    return prev;
+    return new Date(this.day.getFullYear(), this.day.getMonth(), this.day.getDate() - 1);
   }
 
   private get nextDate(): Date {
-    const next = new Date();
-    next.setDate(this.day.getDate() + 1);
-    return next;
+    return new Date(this.day.getFullYear(), this.day.getMonth(), this.day.getDate() + 1);
   }
 
   get prevDay(): number {

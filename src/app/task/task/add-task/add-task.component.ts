@@ -20,10 +20,11 @@ export class AddTaskComponent implements OnInit {
   // }
 
   ngOnInit() {
+    const date = new Date(Date.now()).toISOString().substring(0, 10);
     this.task = this.fb.group({
       title: ['Task', [Validators.required, Validators.minLength(2)]],
-      startTime: [new Date(Date.now())],
-      endTime: [new Date(Date.now())],
+      startTime: [date],
+      endTime: [date],
       location: ['Location'],
       // users: this.fb.array([this.createUsers()])
     });

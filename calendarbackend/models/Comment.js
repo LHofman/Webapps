@@ -2,11 +2,10 @@ var mongoose = require('mongoose');
 
 var CommentSchema = new mongoose.Schema({
     title: String,
-    body: String,
-    comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}]
+    body: String
 });
 CommentSchema.pre('remove', (next) => {
-    this.model('Comment').remove({comments: this._id}, next);
+    this.model('Task').remove({comments: this._id}, next);
 });
 
 mongoose.model('Comment', CommentSchema);

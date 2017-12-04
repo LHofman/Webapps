@@ -30,14 +30,4 @@ export class CommentComponent implements OnInit {
     return this._comment.body;
   }
 
-  get comments(): Comment[] {
-    return this._comment.comments;
-  }
-
-  newCommentAdded(comment: Comment) {
-    // this._commentDataService.addCommentToTask(comment).subscribe(item => {
-    //   this._comment.comments.push(item);
-    // });
-  }
-
 }
