@@ -23,34 +23,33 @@ export class TaskDataService {
   }
 
   addNewTask(task): Observable<Task> {
-    return this.http.post(this._appUrl + 'tasks/', task).map(res =>
+    return this.http.post(this._appUrl + 'tasks/', task,
+    {headers: new Headers({Authorization: `Bearer ${this.auth.token}`})}).map(res =>
       res.json()).map(item =>
         Task.fromJSON(item));
   }
 
   getTask(id): Observable<Task> {
-    return this.http.get(this._appUrl + 'task/' + id).map(response =>
+    return this.http.get(this._appUrl + 'task/' + id,
+    {headers: new Headers({Authorization: `Bearer ${this.auth.token}`})}).map(response =>
       response.json().map(item =>
         Task.fromJSON(item)));
   }
 
   findTasksOnDate(date1: Date, date2?: Date): Observable<Task[]> {
-    return this.http.get(this._appUrl + 'tasks/' + date1 + (date2 ? ('/' + date2) : '')).map(response => {
+    return this.http.get(this._appUrl + 'tasks/' + date1 + (date2 ? ('/' + date2) : ''),
+    {headers: new Headers({Authorization: `Bearer ${this.auth.token}`})}).map(response => {
       return response.json().map(item =>
         Task.fromJSON(item)); } );
   }
 
   removeTask(id): Observable<String> {
-    return this.http.delete(this._appUrl + 'task/' + id).map(response =>
+    return this.http.delete(this._appUrl + 'task/' + id,
+    {headers: new Headers({Authorization: `Bearer ${this.auth.token}`})}).map(response =>
       response.json());
   }
 
   findTasksOfUser(user): Task[] {
-    // return this._tasks.filter(task => {
-    //   for (const _user of task.users) {
-    //     return _user.id === user.id;
-    //   }
-    // }).sort((a, b) => (a.startTime <= b.startTime) ? -1 : 1);
     return undefined;
   }
 

@@ -3,31 +3,23 @@
   <div class="noOverflow">
     <label for="title">Title: </label>
     <input formControlName="title">
-    <div *ngIf="task.get('title').errors?.required && task.get('title').touched" class="error">This is required</div>
+  </div>
+  <div *ngIf="task.get('title').invalid && (task.get('title').dirty || task.get('title').touched)" class="alert alert-danger">
+    <div *ngIf="task.get('title').errors.required">
+      Title is required.
+    </div>
   </div>
   <div>
     <label for="startTime">Starting Time: </label>
-    <input type="date" formControlName="startTime">
+    <input type="datetime-local" formControlName="startTime">
   </div>
   <div>
     <label for="endTime">Ending Time: </label>
-    <input type="date" formControlName="endTime">
+    <input type="datetime-local" formControlName="endTime">
   </div>
   <div>
     <label for="location">Location: </label>
     <input formControlName="location">
   </div>
-  <!-- <div formArrayName="users" *ngFor="let user of task.get('users').controls; let i = index">
-    <div [formGroupName]="i">
-      <div>
-        <label for="user_name">Name:</label>
-        <input formControlName="name">
-      </div>
-      <div>
-        <label for="user_firstname">Firstname:</label>
-        <input formControlName="firstname">
-      </div>
-    </div>
-  </div> -->
   <button type="submit">Add Task</button>
 </form>

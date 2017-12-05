@@ -7,7 +7,7 @@ export class Task {
     public startTime: Date;
     public endTime: Date;
     public location: string;
-    public author: User;
+    public author: String;
     public users = new Array<User>();
     public comments = new Array<Comment>();
 
@@ -17,7 +17,7 @@ export class Task {
         return task;
     }
 
-    constructor(id: number, title: string, startTime: Date, endTime: Date, location: string, author: User) {
+    constructor(id: number, title: string, startTime: Date, endTime: Date, location: string, author: String) {
         this.id = id;
         this.title = title;
         this.startTime = startTime;

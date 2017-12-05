@@ -2,11 +2,11 @@ import {User} from '../user/user.model';
 export class Comment {
 
     private _id: Number;
-    private _author: User;
+    private _author: String;
     private _title: string;
     private _body: string;
 
-    constructor(id: Number, author: User, title: string, body: string) {
+    constructor(id: Number, author: String, title: string, body: string) {
         this._id = id;
         this._author = author;
         this._title = title;
@@ -25,7 +25,7 @@ export class Comment {
         this._id = id;
     }
 
-    get author(): User {
+    get author(): String {
         return this._author;
     }
 

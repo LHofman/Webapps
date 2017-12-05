@@ -18,7 +18,7 @@ export class CommentComponent implements OnInit {
   ngOnInit() {
   }
 
-  get author(): User {
+  get author(): String {
     return this._comment.author;
   }
 

@@ -18,5 +18,17 @@
 </ul>
 <br>
 <br> Comments:
-<app-comment *ngFor="let comment of comments" [_comment]="comment"></app-comment>
+<li *ngFor="let comment of comments">
+  <accordion [showArrows]="true" [closeOthers]="false" [expandAll]="false">
+    <accordion-group>
+      <accordion-heading>
+        {{comment.title}} ({{comment.author}} <a [routerLink]="['/user', 1]"><span class="glyphicon glyphicon-new-window"></span></a>)
+        <a (click)="removeComment(comment)">
+          <span *ngIf="isAuthor(comment)" class="glyphicon glyphicon-remove"></span>
+        </a>&emsp;
+      </accordion-heading>
+      <app-comment [_comment]="comment"></app-comment>
+    </accordion-group>
+  </accordion>
+</li>
 <app-add-comment (newComment)="newCommentAdded($event)"></app-add-comment>

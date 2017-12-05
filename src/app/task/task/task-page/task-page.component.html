@@ -8,7 +8,6 @@
       <app-user [_user]="user"></app-user>
     </li>
   </ul>
-  <app-add-user (newUser)="newUserAdded($event)"></app-add-user>
   <br><br>
   <strong>Comments:</strong>
   <app-comment *ngFor="let comment of comments" [_comment]="comment"></app-comment>

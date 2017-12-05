@@ -5,11 +5,13 @@ import { TaskDataService } from '../../task/task/task-data.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { User } from '../../task/user/user.model';
+import { AuthenticationService } from '../../task/user/authentication.service';
 
 @Component({
   selector: 'app-day',
   templateUrl: './day.component.html',
-  styleUrls: ['./day.component.css']
+  styleUrls: ['./day.component.css'],
+  providers: [AuthenticationService]
 })
 export class DayComponent implements OnInit {
 
@@ -17,6 +19,7 @@ export class DayComponent implements OnInit {
   private _tasks: Task[];
 
   constructor(private route: ActivatedRoute,
+    private auth: AuthenticationService,
     private taskData: TaskDataService,
     private userData: UserDataService) { }
 
@@ -27,6 +30,10 @@ export class DayComponent implements OnInit {
       this.taskData.findTasksOnDate(this.day).subscribe(items =>
         this._tasks = items);
     });
+  }
+
+  isAuthor(task: Task): boolean {
+    return task.author == this.auth.user$.getValue();
   }
 
   removeTask(task: Task) {
@@ -44,15 +51,6 @@ export class DayComponent implements OnInit {
         this.userData.addUserToTask(usr, item));
 
       this._tasks.push(item);
-
-      // Observable.forkJoin(...user).subscribe(
-      //   (users: User[]) => {
-      //     for (const usr of users) {
-      //       item.users.push(usr);
-      //     }
-      //     return this._tasks.push(item);
-      //   }
-      // );
     });
   }
 

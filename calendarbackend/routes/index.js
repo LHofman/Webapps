@@ -25,7 +25,7 @@ router.get('/tasks/', (req, res, next) => {
   });
 });
 router.post('/tasks/', auth, (req, res, next) => {
-  let task = new Task({ title: req.body.title, startTime: req.body.startTime, endTime: req.body.endTime, location: req.body.location });
+  let task = new Task({ title: req.body.title, startTime: req.body.startTime, endTime: req.body.endTime, location: req.body.location, author: req.body.author });
   task.save((err, rec) => {
     if (err) return next(err);
     res.json(rec);
@@ -33,9 +33,7 @@ router.post('/tasks/', auth, (req, res, next) => {
 });
 router.post('/task/:id/comments', (req, res, next) => {
   let cmt = new Comment(req.body);
-  console.log(cmt);
   cmt.save((err, comment) => {
-    console.log(err);
     if (err) return next(err);
     Task.findById(req.params.id, (err, task) => {
       if (err) return next(err);
@@ -103,13 +101,6 @@ router.get('/users/', (req, res, next) => {
     res.json(users);
   });
 });
-router.post('/users/', (req, res, next) => {
-  let user = new User(req.body);
-  user.save((err, rec) => {
-    if (err) return next(err);
-    res.json(rec);
-  });
-});
 router.get('/user/:id', (req, res, next) => {
   //res.json(req.user);
   User.findById(req.params.id, (err, user) => {
@@ -117,20 +108,6 @@ router.get('/user/:id', (req, res, next) => {
     if (!user) return next(new Error('not found ' + req.params.id));
     res.json(user);
   });
-});
-router.delete('/user/:id', (req, res, next) => {
-  User.findById(req.params.id, (err, user) => {
-    if (err) return next(err);
-    if (!user) return next(new Error('not found ' + req.params.id));
-    user.remove((err) => {
-      if (err) return next(err);
-      res.json("removed user");
-    });
-  });
-  // req.user.remove((err) => {
-  //   if (err) return next(err);
-  //   res.json("removed user");
-  // });
 });
 
 router.post('/task/:task/users', (req, res, next) => {

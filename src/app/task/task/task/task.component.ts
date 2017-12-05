@@ -4,18 +4,20 @@ import { UserDataService } from '../../user/user-data.service';
 import { Component, OnInit, Input } from '@angular/core';
 import {Task} from '../task.model';
 import {User} from '../../user/user.model';
+import { AuthenticationService } from '../../user/authentication.service';
 
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.css'],
-  providers: [UserDataService, CommentDataService]
+  providers: [UserDataService, CommentDataService, AuthenticationService]
 })
 export class TaskComponent implements OnInit {
 
   @Input() _task: Task;
 
   constructor(private _userDataService: UserDataService,
+    private auth: AuthenticationService,
     private _commentDataService: CommentDataService) {}
 
   ngOnInit() {
@@ -65,6 +67,10 @@ export class TaskComponent implements OnInit {
     this._commentDataService.addCommentToTask(comment, this._task).subscribe(item => {
       this._task.comments.push(item);
     });
+  }
+
+  isAuthor(comment: Comment): boolean {
+    return comment.author == this.auth.user$.getValue();
   }
 
 }

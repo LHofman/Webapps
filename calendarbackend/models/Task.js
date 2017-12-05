@@ -6,8 +6,8 @@ var TaskSchema = new mongoose.Schema({
     endTime: Date,
     location: String,
     users: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-    groups: [String],
-    comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}]
+    comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}],
+    author: String
 });
 
 mongoose.model('Task', TaskSchema);

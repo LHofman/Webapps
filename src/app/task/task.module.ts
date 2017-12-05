@@ -1,6 +1,5 @@
 import { CommentDataService } from './comment/comment-data.service';
 import { CommentComponent } from './comment/comment/comment.component';
-import { AddUserComponent } from './user/add-user/add-user.component';
 import { UserComponent } from './user/user/user.component';
 import { UserPageComponent } from './user/user-page/user-page.component';
 import { RouterModule } from '@angular/router';
@@ -38,7 +37,6 @@ const routes = [
         AddTaskComponent,
         TaskPageComponent,
         UserComponent,
-        AddUserComponent,
         UserPageComponent,
         CommentComponent,
         AddCommentComponent
