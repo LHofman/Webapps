@@ -1,6 +1,5 @@
 import { CommentDataService } from '../../comment/comment-data.service';
 import { Comment } from '../../comment/comment.model';
-import { Group } from '../../group/group.model';
 import { UserDataService } from '../../user/user-data.service';
 import { Component, OnInit, Input } from '@angular/core';
 import {Task} from '../task.model';
@@ -54,10 +53,6 @@ export class TaskComponent implements OnInit {
 
   get location(): string {
     return this._task.location;
-  }
-
-  get groups(): Group[] {
-    return this._task.groups;
   }
 
   get comments(): Comment[] {

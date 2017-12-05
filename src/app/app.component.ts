@@ -1,49 +1,33 @@
-import { User } from './task/user/user.model';
-import { Observable } from 'rxjs/Rx';
-import { Comment } from './task/comment/comment.model';
-import { CommentDataService } from './task/comment/comment-data.service';
-import { GroupDataService } from './task/group/group-data.service';
-import { TaskDataService } from './task/task/task-data.service';
-import { UserDataService } from './task/user/user-data.service';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import {Task} from './task/task/task.model';
+import { AuthenticationService } from './task/user/authentication.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [UserDataService, TaskDataService, GroupDataService, CommentDataService]
+  providers: [AuthenticationService]
 })
 export class AppComponent implements OnInit {
 
-  private _tasks: Task[];
+  currentUser: string;
 
-  constructor(private taskData: TaskDataService,
-    private userData: UserDataService) {}
+  constructor(private auth: AuthenticationService,
+    private router: Router) {}
 
   ngOnInit() {
-    this.taskData.tasks.subscribe(items =>
-      this._tasks = items);
+    this.currentUser = localStorage.getItem('currentUser');
   }
 
-  get tasks(){
-    return this._tasks;
+  isLoggedIn(): boolean {
+    if (this.currentUser) {return true; }
+    return false;
   }
 
-  newTaskAdded(task) {
-    this.taskData.addNewTask(task).subscribe(item => {
-      const user = task.users.map(usr =>
-        this.userData.addUserToTask(usr, item));
-
-      Observable.forkJoin(...user).subscribe(
-        (users: User[]) => {
-          for (const usr of users) {
-            item.users.push(usr);
-          }
-          return this._tasks.push(item);
-        }
-      );
-    });
+  logout() {
+    this.auth.logout();
+    console.log(localStorage.getItem('currentUser'));
+    this.router.navigate(['/login']);
   }
 
 }

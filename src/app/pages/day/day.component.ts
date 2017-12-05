@@ -30,7 +30,6 @@ export class DayComponent implements OnInit {
   }
 
   removeTask(task: Task) {
-    console.log('removing task: ' + task);
     this.taskData.removeTask(task.id).subscribe(
       result => {
         this._tasks.splice(this._tasks.indexOf(task), 1);

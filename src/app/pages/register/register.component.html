@@ -1,0 +1,45 @@
+<a class="item" (click)="login()">Login</a>
+<form [formGroup]="user" (ngSubmit)="onSubmit()">
+  <h2>Register</h2>
+  <div>
+    <label for="username">username: </label>
+    <input type="text" id="username" formControlName="username">
+  </div>
+  <div *ngIf="user.get('username').invalid && (user.get('username').dirty || user.get('username').touched)" class="alert alert-danger">
+    <div *ngIf="user.get('username').errors.required">
+      Name is required.
+    </div>
+    <div *ngIf="user.get('username').errors.minlength">
+      Name must be at least 4 characters long.
+    </div>
+    <div *ngIf="user.get('username').errors.userAlreadyExists">
+      Username already exists
+    </div>
+  </div>
+  <div [formGroup]="passwordGroup">
+    <div>
+      <label for="password">password: </label>
+      <input type="text" id="password" formControlName="password">
+    </div>
+    <div *ngIf="passwordGroup.get('password').invalid && (passwordGroup.get('password').dirty || passwordGroup.get('password').touched)"
+      class="alert alert-danger">
+      <div *ngIf="passwordGroup.get('password').errors.required">
+        Password is required.
+      </div>
+      <div *ngIf="passwordGroup.get('password').errors.passwordTooShort">
+        The password is too short
+      </div>
+    </div>
+    <div>
+      <label for="confirmPassword">confirm: password: </label>
+      <input type="text" id="confirmPassword" formControlName="confirmPassword">
+    </div>
+  </div>
+  <div *ngIf="user.get('passwordGroup').invalid && (passwordGroup.get('confirmPassword').dirty || passwordGroup.get('confirmPassword').touched)"
+    class="alert alert-danger">
+    <div *ngIf="user.get('passwordGroup').errors.passwordsDiffer">
+      The passwords do not match
+    </div>
+  </div>
+  <button type="submit">Register</button>
+</form>

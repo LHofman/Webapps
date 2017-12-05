@@ -1,4 +1,3 @@
-import { GroupDataService } from './group/group-data.service';
 import { CommentDataService } from './comment/comment-data.service';
 import { CommentComponent } from './comment/comment/comment.component';
 import { AddUserComponent } from './user/add-user/add-user.component';
@@ -7,7 +6,8 @@ import { UserPageComponent } from './user/user-page/user-page.component';
 import { RouterModule } from '@angular/router';
 import { TaskDataService } from './task/task-data.service';
 import { TaskResolver } from './task.resolver';
-import {AccordionModule} from 'ngx-accordion';
+import { AccordionModule } from 'ngx-accordion';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
@@ -16,8 +16,8 @@ import { AddTaskComponent } from './task/add-task/add-task.component';
 import { TaskComponent } from './task/task/task.component';
 import { NgModule } from '@angular/core';
 import { AddCommentComponent } from './comment/add-comment/add-comment.component';
-import { GroupComponent } from './group/group/group.component';
 import { UserDataService } from './user/user-data.service';
+import { AuthenticationService } from './user/authentication.service';
 
 const routes = [
     {path: 'task:taskId', component: TaskPageComponent, resolve: { task: TaskResolver}},
@@ -30,7 +30,8 @@ const routes = [
         CommonModule,
         ReactiveFormsModule, FormsModule,
         RouterModule.forChild(routes),
-        AccordionModule
+        AccordionModule,
+        AngularMultiSelectModule
     ],
     declarations: [
         TaskComponent,
@@ -40,8 +41,7 @@ const routes = [
         AddUserComponent,
         UserPageComponent,
         CommentComponent,
-        AddCommentComponent,
-        GroupComponent
+        AddCommentComponent
     ],
     exports: [
         TaskComponent,
@@ -51,8 +51,8 @@ const routes = [
         TaskDataService,
         UserDataService,
         CommentDataService,
-        GroupDataService,
-        TaskResolver
+        TaskResolver,
+        AuthenticationService
     ]
 })
 export class TaskModule {}

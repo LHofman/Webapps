@@ -1,9 +1,7 @@
 <div class="ui container">
   <div class="ui two item menu">
     <ul>
-      <li>
-        <a class="item" routerLinkActive="active" routerLink="/day/2017/12/4">4 December 2017</a>
-      </li>
+      <li *ngIf="isLoggedIn()"><a class="item" (click)="logout()">Log Out</a></li>
     </ul>
   </div>
 </div>

@@ -1,8 +1,9 @@
+import { AuthenticationService } from '../user/authentication.service';
 import { Comment } from '../comment/comment.model';
 import { User } from '../user/user.model';
 import { Task } from './task.model';
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Headers, Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
@@ -11,10 +12,12 @@ export class TaskDataService {
 
   private _appUrl = '/API/';
 
-  constructor(private http: Http) {}
+  constructor(private http: Http,
+    private auth: AuthenticationService) {}
 
   get tasks(): Observable<Task[]> {
-    return this.http.get(this._appUrl + 'tasks/').map(response =>
+    return this.http.get(this._appUrl + 'tasks/',
+    {headers: new Headers({Authorization: `Bearer ${this.auth.token}`})}).map(response =>
       response.json().map(item =>
         Task.fromJSON(item)));
   }
@@ -33,7 +36,6 @@ export class TaskDataService {
 
   findTasksOnDate(date1: Date, date2?: Date): Observable<Task[]> {
     return this.http.get(this._appUrl + 'tasks/' + date1 + (date2 ? ('/' + date2) : '')).map(response => {
-      console.log(response);
       return response.json().map(item =>
         Task.fromJSON(item)); } );
   }
