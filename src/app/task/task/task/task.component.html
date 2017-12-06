@@ -23,9 +23,6 @@
     <accordion-group>
       <accordion-heading>
         {{comment.title}} ({{comment.author}})
-        <a (click)="removeComment(comment)">
-          <span *ngIf="isAuthor(comment)" class="glyphicon glyphicon-remove"></span>
-        </a>&emsp;
       </accordion-heading>
       <app-comment [_comment]="comment"></app-comment>
     </accordion-group>
