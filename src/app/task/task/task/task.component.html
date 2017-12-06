@@ -2,10 +2,10 @@
 <i>{{location}}</i>
 <br>
 <p>{{startTime}}
-  <a [routerLink]="['/day', startDate.getFullYear(), startDate.getMonth(), startDate.getDate()]">
+  <a [routerLink]="['/day', startDate.getFullYear(), startDate.getMonth() + 1, startDate.getDate()]">
     <span class="glyphicon glyphicon-new-window"></span>
   </a> - {{endTime}}
-  <a [routerLink]="['/day', endDate.getFullYear(), endDate.getMonth(), endDate.getDate()]">
+  <a [routerLink]="['/day', endDate.getFullYear(), endDate.getMonth() + 1, endDate.getDate()]">
     <span class="glyphicon glyphicon-new-window"></span>
   </a>
 </p>

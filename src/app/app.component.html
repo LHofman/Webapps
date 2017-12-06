@@ -2,6 +2,7 @@
   <div class="ui two item menu">
     <ul>
       <li><a routerLink="/profile">My Tasks</a></li>
+      <li><a routerLink="/">Today</a></li>
       <li *ngIf="isLoggedIn()"><a class="item" (click)="logout()">Log Out</a></li>
     </ul>
   </div>
