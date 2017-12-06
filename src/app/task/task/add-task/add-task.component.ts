@@ -20,6 +20,8 @@ export class AddTaskComponent implements OnInit {
   selectedItems = [];
   dropdownSettings = {};
 
+  state = 'small';
+
   constructor(private fb: FormBuilder,
     private userData: UserDataService,
     private auth: AuthenticationService) {}
@@ -51,6 +53,8 @@ export class AddTaskComponent implements OnInit {
   }
 
   onSubmit() {
+    this.state = (this.state === 'small' ? 'large' : 'small');
+
     if (this.task.invalid) {return; }
     const users = new Array<String>();
     for (const item of this.selectedItems) {
