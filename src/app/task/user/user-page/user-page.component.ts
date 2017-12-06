@@ -4,33 +4,41 @@ import { ActivatedRoute } from '@angular/router';
 import { Task } from '../../task/task.model';
 import { User } from '../../user/user.model';
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
-  styleUrls: ['./user-page.component.css']
+  styleUrls: ['./user-page.component.css'],
+  providers: [AuthenticationService, TaskDataService]
 })
 export class UserPageComponent implements OnInit {
 
-  private _user: User;
-  private _tasks: Task[];
+  private _username: String;
+  private _tasks = new Array<Task>();
 
   constructor(private route: ActivatedRoute,
+    private auth: AuthenticationService,
     private userData: UserDataService,
     private taskData: TaskDataService) { }
 
   ngOnInit() {
-    const params = this.route.snapshot.params;
-    // this._user = this.userData.findUser(params.userId);
-    this._tasks = this.taskData.findTasksOfUser(this._user);
+    this._username = this.auth.user$.getValue();
+    this.taskData.tasks.subscribe(items => {
+      this._tasks = new Array<Task>();
+      for (const task of items) {
+        let add = false;
+        if (task.author == this._username) {add = true; }
+        for (const user of task.users) {
+          if (user == this._username) {add = true; }
+        }
+        if (add) {this._tasks.push(task); }
+      }
+    });
   }
 
-  get user(): User {
-    return this._user;
-  }
-
-  get name(): string {
-    return this._user.firstname + ' ' + this._user.name;
+  get username(): String {
+    return this._username;
   }
 
   get tasks(): Task[] {
@@ -48,6 +56,19 @@ export class UserPageComponent implements OnInit {
   newTaskAdded(task) {
     this.taskData.addNewTask(task);
     this._tasks.push(task);
+  }
+
+  isAuthor(task: Task): boolean {
+    return task.author == this.auth.user$.getValue();
+  }
+
+  removeTask(task: Task) {
+    this.taskData.removeTask(task.id).subscribe(
+      result => {
+        this._tasks.splice(this._tasks.indexOf(task), 1);
+      },
+      error => console.log(error)
+    );
   }
 
 }

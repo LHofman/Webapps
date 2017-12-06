@@ -12,7 +12,7 @@
   </div>
   <div>
     <label for="password">password: </label>
-    <input type="text" id="password" formControlName="password">
+    <input type="password" id="password" formControlName="password">
   </div>
   <div *ngIf="user.get('password').invalid && (user.get('password').dirty || user.get('password').touched)" class="alert alert-danger">
     <div *ngIf="user.get('password').errors.required">

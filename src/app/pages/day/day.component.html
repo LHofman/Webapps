@@ -14,9 +14,7 @@
       <accordion [showArrows]="true" [closeOthers]="false" [expandAll]="false">
         <accordion-group>
           <accordion-heading>
-            {{task.title}}
-            <a [routerLink]="['/task', task.id]"><span class="glyphicon glyphicon-new-window"></span></a> 
-            ({{getTime(task.startTime, task.endTime)}})
+            {{task.title}} ({{getTime(task.startTime, task.endTime)}})
             <a (click)="removeTask(task)"><span *ngIf="isAuthor(task)" class="glyphicon glyphicon-remove"></span></a>&emsp;
           </accordion-heading>
           <app-task [_task]="task"></app-task>

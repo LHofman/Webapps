@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './task/user/authentication.service';
 
@@ -26,7 +26,6 @@ export class AppComponent implements OnInit {
 
   logout() {
     this.auth.logout();
-    console.log(localStorage.getItem('currentUser'));
     this.router.navigate(['/login']);
   }
 

@@ -19,7 +19,7 @@
   <div [formGroup]="passwordGroup">
     <div>
       <label for="password">password: </label>
-      <input type="text" id="password" formControlName="password">
+      <input type="password" id="password" formControlName="password">
     </div>
     <div *ngIf="passwordGroup.get('password').invalid && (passwordGroup.get('password').dirty || passwordGroup.get('password').touched)"
       class="alert alert-danger">
@@ -32,7 +32,7 @@
     </div>
     <div>
       <label for="confirmPassword">confirm: password: </label>
-      <input type="text" id="confirmPassword" formControlName="confirmPassword">
+      <input type="password" id="confirmPassword" formControlName="confirmPassword">
     </div>
   </div>
   <div *ngIf="user.get('passwordGroup').invalid && (passwordGroup.get('confirmPassword').dirty || passwordGroup.get('confirmPassword').touched)"

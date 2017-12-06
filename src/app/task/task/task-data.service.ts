@@ -49,8 +49,4 @@ export class TaskDataService {
       response.json());
   }
 
-  findTasksOfUser(user): Task[] {
-    return undefined;
-  }
-
 }

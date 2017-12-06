@@ -27,8 +27,18 @@ export class DayComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.day = new Date(params.year, params.month - 1, params.day);
       this._tasks = new Array<Task>();
-      this.taskData.findTasksOnDate(this.day).subscribe(items =>
-        this._tasks = items);
+      this.taskData.findTasksOnDate(this.day).subscribe(items => {
+        this._tasks = new Array<Task>();
+        const username = this.auth.user$.getValue();
+        for (const task of items) {
+          let add = false;
+          if (task.author == username) {add = true; }
+          for (const user of task.users) {
+            if (user == username) {add = true; }
+          }
+          if (add) {this._tasks.push(task); }
+        }
+      });
     });
   }
 

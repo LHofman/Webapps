@@ -13,7 +13,7 @@
 <br> Invitees:
 <ul>
   <li *ngFor="let user of users">
-    {{user}} <a [routerLink]="['/user', user]"><span class="glyphicon glyphicon-new-window"></span></a>
+    {{user}}
   </li>
 </ul>
 <br>
@@ -22,7 +22,7 @@
   <accordion [showArrows]="true" [closeOthers]="false" [expandAll]="false">
     <accordion-group>
       <accordion-heading>
-        {{comment.title}} ({{comment.author}} <a [routerLink]="['/user', comment.author]"><span class="glyphicon glyphicon-new-window"></span></a>)
+        {{comment.title}} ({{comment.author}})
         <a (click)="removeComment(comment)">
           <span *ngIf="isAuthor(comment)" class="glyphicon glyphicon-remove"></span>
         </a>&emsp;
