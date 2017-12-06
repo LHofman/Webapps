@@ -27,6 +27,7 @@ export class AddCommentComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.comment.invalid) {return; }
     const value = this.comment.value;
     if (!(value.title && value.body)) {return; }
     const comment = new Comment(0, this.auth.user$.getValue(), value.title, value.body);

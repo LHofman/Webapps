@@ -46,7 +46,7 @@ export class TaskPageComponent implements OnInit {
       + endTime.toLocaleTimeString();
   }
 
-  get users(): User[] {
+  get users(): String[] {
     return this._task.users;
   }
 

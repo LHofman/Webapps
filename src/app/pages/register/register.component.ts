@@ -56,7 +56,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('submitting');
+    if (this.user.invalid) {return; }
     this.authenticationService.register(this.user.value.username, this.passwordGroup.value.password).subscribe(val => {
       if (val) {
         this.router.navigate(['/']);

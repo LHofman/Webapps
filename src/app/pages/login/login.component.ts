@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.user.invalid) {return; }
     this.authService.login(this.user.value.username, this.user.value.password).subscribe(val => {
       if (val) {
         this.errorMsg = '';

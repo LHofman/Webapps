@@ -1,3 +1,4 @@
+import { TaskDataService } from '../task-data.service';
 import { CommentDataService } from '../../comment/comment-data.service';
 import { Comment } from '../../comment/comment.model';
 import { UserDataService } from '../../user/user-data.service';
@@ -10,7 +11,7 @@ import { AuthenticationService } from '../../user/authentication.service';
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.css'],
-  providers: [UserDataService, CommentDataService, AuthenticationService]
+  providers: [UserDataService, CommentDataService, AuthenticationService, TaskDataService]
 })
 export class TaskComponent implements OnInit {
 
@@ -18,6 +19,7 @@ export class TaskComponent implements OnInit {
 
   constructor(private _userDataService: UserDataService,
     private auth: AuthenticationService,
+    private taskData: TaskDataService,
     private _commentDataService: CommentDataService) {}
 
   ngOnInit() {
@@ -29,7 +31,7 @@ export class TaskComponent implements OnInit {
     return this._task.title;
   }
 
-  get users(): User[] {
+  get users(): String[] {
     return this._task.users;
   }
 

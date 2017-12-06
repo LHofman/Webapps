@@ -8,7 +8,7 @@ let Task = mongoose.model('Task');
 let User = mongoose.model('User');
 let Comment = mongoose.model('Comment');
 
-router.param('task', (req, res, next, id) => {//TODO does not get called
+router.param('task', (req, res, next, id) => {// does not get called
   let query = Task.findById(id);
   query.exec((err, task) => {
     if (err) return next(err);
@@ -25,7 +25,7 @@ router.get('/tasks/', (req, res, next) => {
   });
 });
 router.post('/tasks/', auth, (req, res, next) => {
-  let task = new Task({ title: req.body.title, startTime: req.body.startTime, endTime: req.body.endTime, location: req.body.location, author: req.body.author });
+  let task = new Task({ title: req.body.title, startTime: req.body.startTime, endTime: req.body.endTime, location: req.body.location, author: req.body.author, users: req.body.users });
   task.save((err, rec) => {
     if (err) return next(err);
     res.json(rec);
@@ -74,16 +74,16 @@ router.get('/tasks/:date', (req, res, next) => {
     res.json(tasks);
   });
 });
-router.get('/tasks/:date/:date2', (req, res, next) => {
-  let date = new Date(req.params.date);
-  let dateAfter = new Date(req.params.date2);
-  dateAfter.setDate(dateAfter.getDate() + 1);
-  let query = Task.find({ $and: [{ startTime: { $lt: dateAfter } }, { endTime: { $gte: date } }] }).populate('comments');
-  query.exec((err, tasks) => {
-    if (err) return next(err);
-    res.json(tasks);
-  });
-});
+// router.get('/tasks/:date/:date2', (req, res, next) => {
+//   let date = new Date(req.params.date);
+//   let dateAfter = new Date(req.params.date2);
+//   dateAfter.setDate(dateAfter.getDate() + 1);
+//   let query = Task.find({ $and: [{ startTime: { $lt: dateAfter } }, { endTime: { $gte: date } }] }).populate('comments');
+//   query.exec((err, tasks) => {
+//     if (err) return next(err);
+//     res.json(tasks);
+//   });
+// });
 
 router.param('user', (req, res, next, id) => {//TODO does not get called
   let query = User.findById(id);

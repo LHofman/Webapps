@@ -23,7 +23,11 @@ export class UserDataService {
       User.fromJSON(item));
   }
 
-  findUser(id): User {
-    return undefined;
+  get users(): Observable<User[]> {
+    return this.http.get(this._appUrl + 'users/',
+    {headers: new Headers({Authorization: `Bearer ${this.auth.token}`})}).map(response =>
+      response.json().map(item =>
+        User.fromJSON(item)));
   }
+
 }

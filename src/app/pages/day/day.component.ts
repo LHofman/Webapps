@@ -47,9 +47,6 @@ export class DayComponent implements OnInit {
 
   newTaskAdded(task: Task) {
     this.taskData.addNewTask(task).subscribe(item => {
-      const user = task.users.map(usr =>
-        this.userData.addUserToTask(usr, item));
-
       this._tasks.push(item);
     });
   }

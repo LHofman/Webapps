@@ -21,7 +21,7 @@ export class UserPageComponent implements OnInit {
 
   ngOnInit() {
     const params = this.route.snapshot.params;
-    this._user = this.userData.findUser(params.userId);
+    // this._user = this.userData.findUser(params.userId);
     this._tasks = this.taskData.findTasksOfUser(this._user);
   }
 
